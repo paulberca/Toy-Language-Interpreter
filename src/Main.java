@@ -1,3 +1,3 @@
-// pana la 2.4 inclusiv
+// 2.5 - 4.3 inclusiv
 
 // model tipuri valori si expresii
