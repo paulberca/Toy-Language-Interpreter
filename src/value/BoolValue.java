@@ -4,7 +4,7 @@ import type.BoolType;
 import type.Type;
 
 public class BoolValue implements Value {
-    boolean val;
+    private boolean val;
 
     public BoolValue(boolean val) {
         this.val = val;

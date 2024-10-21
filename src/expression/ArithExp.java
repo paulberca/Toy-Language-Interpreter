@@ -5,9 +5,9 @@ import value.IntValue;
 import value.Value;
 
 public class ArithExp implements Exp {
-    Exp e1;
-    Exp e2;
-    int op; //1-plus, 2-minus, 3-star, 4-divide
+    private Exp e1;
+    private Exp e2;
+    private int op; //1-plus, 2-minus, 3-star, 4-divide
 
     public ArithExp(Exp e1, Exp e2, int op) {
         this.e1 = e1;

@@ -3,7 +3,7 @@ package model;
 import expression.Exp;
 
 public class PrintStmt implements IStmt {
-    Exp exp;
+    private Exp exp;
 
     public PrintStmt(Exp exp) {
         this.exp = exp;

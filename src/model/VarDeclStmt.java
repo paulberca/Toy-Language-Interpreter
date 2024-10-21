@@ -3,8 +3,8 @@ package model;
 import type.Type;
 
 public class VarDeclStmt implements IStmt {
-    String name;
-    Type typ;
+    private String name;
+    private Type typ;
 
     public VarDeclStmt(String name, Type typ) {
         this.name = name;
