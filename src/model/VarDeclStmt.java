@@ -1,12 +1,12 @@
 package model;
 
-import type.Type;
+import type.IType;
 
 public class VarDeclStmt implements IStmt {
     private String name;
-    private Type typ;
+    private IType typ;
 
-    public VarDeclStmt(String name, Type typ) {
+    public VarDeclStmt(String name, IType typ) {
         this.name = name;
         this.typ = typ;
     }
