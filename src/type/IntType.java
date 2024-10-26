@@ -1,12 +1,12 @@
 package type;
 
-public class IntType implements Type {
-    public boolean equals(Object obj) {
-        return obj instanceof IntType;
+public class IntType implements IType {
+    public boolean equals(IType type) {
+        return type instanceof IntType;
     }
 
     public String toString() {
-        return "int";
+        return "IntType";
     }
 }
 
