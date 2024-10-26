@@ -1,10 +1,9 @@
 package value;
 
-import type.Type;
+import type.IType;
 
 public interface IValue {
-    String toString();
     boolean equals(IValue v);
-    Type getType();
+    IType getType();
 }
 

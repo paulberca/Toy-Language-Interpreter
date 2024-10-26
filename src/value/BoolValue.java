@@ -22,7 +22,7 @@ public class BoolValue implements IValue {
     }
 
     @Override
-    public Type getType() {
+    public IType getType() {
         return new BoolType();
     }
 

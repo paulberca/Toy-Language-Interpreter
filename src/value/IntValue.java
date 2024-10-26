@@ -3,26 +3,26 @@ package value;
 import type.*;
 
 public class IntValue implements IValue {
-    private int val;
+    private int intValue;
 
     public IntValue(int val) {
-        this.val = val;
+        intValue = val;
     }
 
     public IntValue() {
-        this.val = 0;
+        intValue = 0;
     }
 
     public int getVal() {
-        return val;
+        return intValue;
     }
 
     public String toString() {
-        return "" + val;
+        return "" + intValue;
     }
 
     @Override
-    public Type getType() {
+    public IType getType() {
         return new IntType();
     }
 
@@ -32,7 +32,6 @@ public class IntValue implements IValue {
             return false;
         }
         IntValue val = (IntValue) v;
-        return this.val == val.getVal();
+        return this.intValue == val.getVal();
     }
 }
-
