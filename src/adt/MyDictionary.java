@@ -1,5 +1,7 @@
 package adt;
 
+import exception.MyException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +23,10 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
     }
 
     @Override
-    public TValue lookup(TKey key) {
+    public TValue lookup(TKey key) throws MyException {
+        if (!dict.containsKey(key)) {
+            throw new MyException("Key not found in dictionary");
+        }
         return dict.get(key);
     }
 
