@@ -1,9 +1,10 @@
 package model.statement;
 
+import model.adt.MyIList;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
-import model.adt.*;
+import model.value.IValue;
 
 public class PrintStmt implements IStmt {
     private IExpression exp;
@@ -17,8 +18,15 @@ public class PrintStmt implements IStmt {
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        // code to be added
+        IValue val = exp.eval(state.getSymTable());
+        MyIList<IValue> out = state.getOut();
+        out.add(val);
         return state;
+    }
+
+    @Override
+    public IStmt deepCopy() {
+        return new PrintStmt(exp.deepCopy());
     }
 }
 

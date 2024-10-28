@@ -15,5 +15,10 @@ public class VarExp implements IExpression {
     public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
         return tbl.lookup(id);
     }
+
+    @Override
+    public IExpression deepCopy() {
+        return new VarExp(id);
+    }
 }
 

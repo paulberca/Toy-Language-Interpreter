@@ -6,5 +6,7 @@ import model.value.*;
 
 public interface IExpression {
     public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException;
+
+    IExpression deepCopy();
 }
 

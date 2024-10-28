@@ -40,5 +40,10 @@ public class LogicExp implements IExpression {
     public String toString() {
         return e1.toString() + " " + op.toString() + " " + e2.toString();
     }
+
+    @Override
+    public IExpression deepCopy() {
+        return new LogicExp(e1.deepCopy(), e2.deepCopy(), op);
+    }
 }
 
