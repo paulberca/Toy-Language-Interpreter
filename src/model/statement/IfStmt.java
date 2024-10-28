@@ -40,5 +40,9 @@ public class IfStmt implements IStmt {
 
         return state;
     }
+
+    public IStmt deepCopy() {
+        return new IfStmt(exp.deepCopy(), thenS.deepCopy(), elseS.deepCopy());
+    }
 }
 

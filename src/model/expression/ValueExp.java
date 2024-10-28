@@ -15,5 +15,10 @@ public class ValueExp implements IExpression {
     public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
         return e;
     }
+
+    @Override
+    public IExpression deepCopy() {
+        return new ValueExp(e);
+    }
 }
 

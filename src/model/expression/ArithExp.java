@@ -44,5 +44,9 @@ public class ArithExp implements IExpression {
         }
         throw new MyException("first operand is not an integer");
     }
-}
 
+    @Override
+    public IExpression deepCopy() {
+        return new ArithExp(e1.deepCopy(), e2.deepCopy(), op);
+    }
+}

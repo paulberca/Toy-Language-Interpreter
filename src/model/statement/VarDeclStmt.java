@@ -18,5 +18,10 @@ public class VarDeclStmt implements IStmt {
         // code to be added
         return state;
     }
+
+    @Override
+    public IStmt deepCopy() {
+        return new VarDeclStmt(name, typ);
+    }
 }
 

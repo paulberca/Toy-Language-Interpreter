@@ -6,7 +6,7 @@ public class MyStack<T> implements MyIStack<T> {
     private Stack<T> stack;
 
     public MyStack() {
-        stack = new Stack<T>();
+        stack = new Stack<>();
     }
 
     @Override
