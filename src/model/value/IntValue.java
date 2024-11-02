@@ -34,4 +34,9 @@ public class IntValue implements IValue {
         IntValue val = (IntValue) v;
         return this.intValue == val.getVal();
     }
+
+    @Override
+    public IValue deepCopy() {
+        return new IntValue(intValue);
+    }
 }

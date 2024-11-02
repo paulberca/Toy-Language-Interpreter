@@ -18,7 +18,7 @@ public class ValueExp implements IExpression {
 
     @Override
     public IExpression deepCopy() {
-        return new ValueExp(e);
+        return new ValueExp(e.deepCopy());
     }
 }
 

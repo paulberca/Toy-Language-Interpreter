@@ -34,5 +34,10 @@ public class BoolValue implements IValue {
         BoolValue val = (BoolValue) v;
         return this.val == val.getVal();
     }
+
+    @Override
+    public IValue deepCopy() {
+        return new BoolValue(val);
+    }
 }
 
