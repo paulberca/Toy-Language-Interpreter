@@ -1,5 +1,7 @@
 package model.adt;
 
+import model.exception.ListException;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,16 +19,28 @@ public class MyList<T> implements MyIList<T> {
 
     @Override
     public void remove(int index) {
+        if (index < 0 || index >= list.size()) {
+            throw new ListException("Index out of bounds");
+        }
+
         list.remove(index);
     }
 
     @Override
     public T get(int index) {
+        if (index < 0 || index >= list.size()) {
+            throw new ListException("Index out of bounds");
+        }
+
         return list.get(index);
     }
 
     @Override
     public void set(int index, T value) {
+        if (index < 0 || index >= list.size()) {
+            throw new ListException("Index out of bounds");
+        }
+
         list.set(index, value);
     }
 

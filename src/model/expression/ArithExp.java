@@ -35,14 +35,14 @@ public class ArithExp implements IExpression {
                 if (op == 3) return new IntValue(n1 * n2);
                 if (op == 4) {
                     if (n2 == 0)
-                        throw new MyException("division by zero");
+                        throw new DivByZero("Division by zero");
                     return new IntValue(n1 / n2);
                 }
             }
             else
-                throw new MyException("second operand is not an integer");
+                throw new UndefinedVariable("Second operand is not an integer");
         }
-        throw new MyException("first operand is not an integer");
+        throw new UndefinedVariable("First operand is not an integer");
     }
 
     @Override

@@ -1,11 +1,13 @@
 package model.adt;
 
+import model.exception.StackException;
+
 public interface MyIStack<T> {
     void push(T value);
 
-    T pop();
+    T pop() throws StackException;
 
-    T peek();
+    T peek() throws StackException;
 
     boolean isEmpty();
 

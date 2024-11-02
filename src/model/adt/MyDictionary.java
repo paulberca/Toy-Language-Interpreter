@@ -1,6 +1,6 @@
 package model.adt;
 
-import model.exception.MyException;
+import model.exception.UndefinedVariable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,14 +18,17 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
     }
 
     @Override
-    public void update(TKey key, TValue val) {
+    public void update(TKey key, TValue val) throws UndefinedVariable {
+        if (!dict.containsKey(key)) {
+            throw new UndefinedVariable("Key not found in dictionary");
+        }
         dict.put(key, val);
     }
 
     @Override
-    public TValue lookup(TKey key) throws MyException {
+    public TValue lookup(TKey key) throws UndefinedVariable {
         if (!dict.containsKey(key)) {
-            throw new MyException("Key not found in dictionary");
+            throw new UndefinedVariable("Key not found in dictionary");
         }
         return dict.get(key);
     }
