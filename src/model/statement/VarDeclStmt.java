@@ -15,13 +15,17 @@ public class VarDeclStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        // code to be added
+        state.getSymTable().declareVariable(name, typ);
         return state;
     }
 
     @Override
     public IStmt deepCopy() {
         return new VarDeclStmt(name, typ);
+    }
+
+    public String toString() {
+        return name + ": " + typ.toString();
     }
 }
 

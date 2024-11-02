@@ -49,4 +49,13 @@ public class ArithExp implements IExpression {
     public IExpression deepCopy() {
         return new ArithExp(e1.deepCopy(), e2.deepCopy(), op);
     }
+
+    public String toString() {
+        String opStr = "";
+        if (op == 1) opStr = "+";
+        if (op == 2) opStr = "-";
+        if (op == 3) opStr = "*";
+        if (op == 4) opStr = "/";
+        return e1.toString() + opStr + e2.toString();
+    }
 }

@@ -21,7 +21,6 @@ public class AssignStmt implements IStmt {
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        MyIStack<IStmt> stk = state.getExeStack();
         MyIDictionary<String, IValue> symTbl = state.getSymTable();
 
         if (symTbl.isDefined(id)) {
@@ -31,11 +30,11 @@ public class AssignStmt implements IStmt {
                 symTbl.update(id, val);
             }
             else {
-                throw new MyException("declared model.type of variable " + id + " and model.type of the assigned model.expression do not match");
+                throw new MyException("Declared model.type of variable " + id + " and model.type of the assigned model.expression do not match");
             }
         }
         else {
-            throw new MyException("the used variable " + id + " was not declared before");
+            throw new MyException("The used variable " + id + " was not declared before");
         }
 
         return state;
