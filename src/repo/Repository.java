@@ -20,6 +20,10 @@ public class Repository implements IRepo {
         this.prg = prg;
     }
 
+    public void changePrgState(PrgState newPrg) {
+        prg = newPrg;
+    }
+
     public PrgState getCrtPrg() {
         return prg;
     }

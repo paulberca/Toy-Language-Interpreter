@@ -20,5 +20,9 @@ public class VarExp implements IExpression {
     public IExpression deepCopy() {
         return new VarExp(id);
     }
+
+    public String toString() {
+        return id;
+    }
 }
 

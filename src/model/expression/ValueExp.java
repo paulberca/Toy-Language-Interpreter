@@ -20,5 +20,9 @@ public class ValueExp implements IExpression {
     public IExpression deepCopy() {
         return new ValueExp(e.deepCopy());
     }
+
+    public String toString() {
+        return e.toString();
+    }
 }
 

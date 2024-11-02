@@ -13,6 +13,7 @@ public class Controller {
 
     public Controller(IRepo repo) {
         this.repo = repo;
+        printFlag = true;
     }
 
     public PrgState oneStep(PrgState state) throws StackException, MyException {
@@ -28,7 +29,6 @@ public class Controller {
 
     public void allStep() {
         PrgState prg = repo.getCrtPrg();
-
         while (!prg.getExeStack().isEmpty()) {
             try {
                 if (printFlag) {
@@ -39,6 +39,7 @@ public class Controller {
                 System.out.println(e.getMessage());
             }
         }
+        displayCrtPrgState(prg);
     }
 
     public void displayCrtPrgState(PrgState prg) {
