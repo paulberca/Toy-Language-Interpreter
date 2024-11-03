@@ -14,8 +14,8 @@ public class VarDeclStmt implements IStmt {
     }
 
     @Override
-    public PrgState execute(PrgState state) throws MyException {
-        state.getSymTable().declareVariable(name, typ);
+    public PrgState execute(PrgState state) {
+        state.getSymTable().add(name, typ.defaultValue());
         return state;
     }
 
@@ -25,7 +25,7 @@ public class VarDeclStmt implements IStmt {
     }
 
     public String toString() {
-        return name + ": " + typ.toString();
+        return name + ":" + typ.toString();
     }
 }
 

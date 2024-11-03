@@ -1,6 +1,5 @@
 package controller;
 
-import model.adt.MyIStack;
 import model.exception.MyException;
 import model.exception.StackException;
 import model.prgstate.PrgState;
@@ -17,24 +16,23 @@ public class Controller {
     }
 
     public PrgState oneStep(PrgState state) throws StackException, MyException {
-        MyIStack<IStmt> stk = state.getExeStack();
-
-        if (stk.isEmpty()) {
-            throw new StackException("prgstate stack is empty");
-        }
-
-        IStmt crtStmt = stk.pop();
+        IStmt crtStmt = state.getExeStack().pop();
         return crtStmt.execute(state);
     }
 
     public void allStep() {
         PrgState prg = repo.getCrtPrg();
+        try {
+            repo.clearFile();
+            repo.logPrgStateExec();
+        } catch (MyException e) { System.out.println(e.getMessage()); }
         while (!prg.getExeStack().isEmpty()) {
             try {
                 if (printFlag) {
                     displayCrtPrgState(prg);
                 }
                 oneStep(prg);
+                try { repo.logPrgStateExec(); } catch (MyException e) { System.out.println(e.getMessage()); }
             } catch (MyException | StackException e) {
                 System.out.println(e.getMessage());
             }
