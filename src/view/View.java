@@ -9,6 +9,7 @@ import model.type.*;
 import model.value.*;
 import repo.IRepo;
 
+import java.io.BufferedReader;
 import java.util.Scanner;
 
 public class View {
@@ -29,6 +30,12 @@ public class View {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
+
+        String logFilePath;
+        System.out.print("Enter log file path: ");
+        logFilePath = scanner.nextLine();
+        repo.changeFilePath(logFilePath);
+
         boolean prgChosen = false;
         while (true) {
             printMenu();
@@ -58,7 +65,8 @@ public class View {
         MyIStack<IStmt> stack = new MyStack<>();
         MyIDictionary<String, IValue> symTable = new MyDictionary<>();
         MyIList<IValue> out = new MyList<>();
-        PrgState prg = new PrgState(stack, symTable, out, program);
+        MyIDictionary<String, BufferedReader> fileTable = new MyDictionary<>();
+        PrgState prg = new PrgState(stack, symTable, out, fileTable, program);
         repo.changePrgState(prg);
     }
 

@@ -1,7 +1,6 @@
 package model.adt;
 
 import model.exception.UndefinedVariable;
-import model.type.IType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,11 +36,6 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
     @Override
     public void add(TKey key, TValue val) {
         dict.put(key, val);
-    }
-
-    @Override
-    public void declareVariable(TKey key, IType type) {
-        dict.put(key, (TValue) type.defaultValue());
     }
 
     @Override
