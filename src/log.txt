@@ -1,5 +1,5 @@
 ExeStack:
-(a:IntType;(b:IntType;(a=2+3*5;(b=a+1;print(b)))))
+(varf:StringType;(varf=src/test.in;(openRFile(varf);(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))))))))
 
 SymTable:
 
@@ -9,8 +9,8 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(b:IntType;(a=2+3*5;(b=a+1;print(b))))
-a:IntType
+(varf=src/test.in;(openRFile(varf);(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))))))
+varf:StringType
 
 SymTable:
 
@@ -20,10 +20,10 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(b:IntType;(a=2+3*5;(b=a+1;print(b))))
+(varf=src/test.in;(openRFile(varf);(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))))))
 
 SymTable:
-a->0
+varf->
 
 Out:
 []
@@ -31,11 +31,11 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(a=2+3*5;(b=a+1;print(b)))
-b:IntType
+(openRFile(varf);(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))))))
+varf=src/test.in
 
 SymTable:
-a->0
+varf->
 
 Out:
 []
@@ -43,11 +43,10 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(a=2+3*5;(b=a+1;print(b)))
+(openRFile(varf);(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))))))
 
 SymTable:
-a->0
-b->0
+varf->src/test.in
 
 Out:
 []
@@ -55,12 +54,11 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(b=a+1;print(b))
-a=2+3*5
+(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))))
+openRFile(varf)
 
 SymTable:
-a->0
-b->0
+varf->src/test.in
 
 Out:
 []
@@ -68,50 +66,159 @@ FileTable:
 
 --------------------------------------------------
 ExeStack:
-(b=a+1;print(b))
+(varc:IntType;(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))))
 
 SymTable:
-a->17
-b->0
+varf->src/test.in
 
 Out:
 []
 FileTable:
+src/test.in->java.io.BufferedReader@41906a77
 
 --------------------------------------------------
 ExeStack:
-print(b)
-b=a+1
+(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))))
+varc:IntType
 
 SymTable:
-a->17
-b->0
+varf->src/test.in
 
 Out:
 []
 FileTable:
+src/test.in->java.io.BufferedReader@41906a77
 
 --------------------------------------------------
 ExeStack:
-print(b)
+(ReadFile(varf, varc);(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))))
 
 SymTable:
-a->17
-b->18
+varf->src/test.in
+varc->0
 
 Out:
 []
 FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))
+ReadFile(varf, varc)
+
+SymTable:
+varf->src/test.in
+varc->0
+
+Out:
+[]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(print(varc);(ReadFile(varf, varc);(print(varc);CloseRFile(varf))))
+
+SymTable:
+varf->src/test.in
+varc->15
+
+Out:
+[]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))
+print(varc)
+
+SymTable:
+varf->src/test.in
+varc->15
+
+Out:
+[]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(ReadFile(varf, varc);(print(varc);CloseRFile(varf)))
+
+SymTable:
+varf->src/test.in
+varc->15
+
+Out:
+[15]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(print(varc);CloseRFile(varf))
+ReadFile(varf, varc)
+
+SymTable:
+varf->src/test.in
+varc->15
+
+Out:
+[15]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+(print(varc);CloseRFile(varf))
+
+SymTable:
+varf->src/test.in
+varc->50
+
+Out:
+[15]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+CloseRFile(varf)
+print(varc)
+
+SymTable:
+varf->src/test.in
+varc->50
+
+Out:
+[15]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
+
+--------------------------------------------------
+ExeStack:
+CloseRFile(varf)
+
+SymTable:
+varf->src/test.in
+varc->50
+
+Out:
+[15, 50]
+FileTable:
+src/test.in->java.io.BufferedReader@41906a77
 
 --------------------------------------------------
 ExeStack:
 
 SymTable:
-a->17
-b->18
+varf->src/test.in
+varc->50
 
 Out:
-[18]
+[15, 50]
 FileTable:
 
 --------------------------------------------------

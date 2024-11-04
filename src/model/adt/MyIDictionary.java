@@ -10,4 +10,6 @@ public interface MyIDictionary<TKey, TValue> {
     TValue lookup(TKey key) throws UndefinedVariable;
 
     void add(TKey key, TValue val);
+
+    void delete(TKey key) throws UndefinedVariable;
 }
