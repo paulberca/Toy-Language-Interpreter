@@ -2,7 +2,6 @@ package model.expression;
 
 import model.value.*;
 import model.adt.*;
-import model.exception.*;
 
 public class ValueExp implements IExpression {
     private IValue e;
@@ -12,7 +11,7 @@ public class ValueExp implements IExpression {
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
+    public IValue eval(MyIDictionary<String, IValue> tbl) {
         return e;
     }
 

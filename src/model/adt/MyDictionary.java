@@ -39,6 +39,14 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
     }
 
     @Override
+    public void delete(TKey key) throws UndefinedVariable {
+        if (!dict.containsKey(key)) {
+            throw new UndefinedVariable("Key " + key + " not found in dictionary");
+        }
+        dict.remove(key);
+    }
+
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
         for (TKey key : this.dict.keySet()) {

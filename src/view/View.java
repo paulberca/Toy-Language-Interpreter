@@ -36,20 +36,14 @@ public class View {
         logFilePath = scanner.nextLine();
         repo.changeFilePath(logFilePath);
 
-        boolean prgChosen = false;
         while (true) {
             printMenu();
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
                     chooseHardcodedProgram();
-                    prgChosen = true;
                     break;
                 case 2:
-                    if (!prgChosen) {
-                        System.out.println("No program chosen!");
-                        break;
-                    }
                     System.out.print("Current program: ");
                     System.out.println(repo.getCrtPrg().getExeStack().toString());
                     controller.allStep();
