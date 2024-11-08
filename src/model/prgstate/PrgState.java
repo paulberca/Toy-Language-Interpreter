@@ -11,7 +11,7 @@ public class PrgState {
     private MyIDictionary<String, IValue> symTable;
     private MyIList<IValue> out;
     private MyIDictionary<String, BufferedReader> fileTable;
-    private IStmt originalProgram;  // optional
+    private IStmt originalProgram;
 
     public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, IValue> symtbl, MyIList<IValue> ot, MyIDictionary<String, BufferedReader> ft,IStmt prg) {
         exeStack = stk;
