@@ -38,9 +38,9 @@ public class ArithExp implements IExpression {
                         throw new DivByZero("Division by zero");
                     return new IntValue(n1 / n2);
                 }
+                throw new UndefinedVariable("Invalid operator");
             }
-            else
-                throw new UndefinedVariable("Second operand is not an integer");
+            else throw new UndefinedVariable("Second operand is not an integer");
         }
         throw new UndefinedVariable("First operand is not an integer");
     }

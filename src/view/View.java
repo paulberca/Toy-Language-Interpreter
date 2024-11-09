@@ -61,12 +61,15 @@ public class View {
                         new CompStmt(new AssignStmt("a", new ValueExp(new BoolValue(true))),
                                 new CompStmt(new IfStmt(new VarExp("a"), new AssignStmt("v", new ValueExp(new IntValue(2))), new AssignStmt("v", new ValueExp(new IntValue(3)))),
                                         new PrintStmt(new VarExp("v"))))));
+        IStmt program4 = new CompStmt(new IfStmt(new RelationalExp(new ValueExp(new IntValue(2)), new ValueExp(new IntValue(3)), 2), new PrintStmt(new ValueExp(new StringValue("true"))), new PrintStmt(new ValueExp(new StringValue("false")))), new NopStmt());
+
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a program: ");
         System.out.println("1. " + program1.toString());
         System.out.println("2. " + program2.toString());
         System.out.println("3. " + program3.toString());
+        System.out.println("4. " + program4.toString());
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -78,6 +81,11 @@ public class View {
             case 3:
                 controller.changePrgState(program3);
                 break;
+            case 4:
+                controller.changePrgState(program4);
+                break;
+            default:
+                System.out.println("Invalid option");
         }
     }
 }
