@@ -7,7 +7,6 @@ import model.type.*;
 import model.value.*;
 import repo.IRepo;
 
-import java.io.BufferedReader;
 import java.util.Scanner;
 
 public class View {
