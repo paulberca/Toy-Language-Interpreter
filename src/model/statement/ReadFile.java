@@ -52,7 +52,7 @@ public class ReadFile implements IStmt {
             reader = prg.getFileTable().lookup(val.toString());
             String line = reader.readLine();
             if (line == null) {
-                prg.getSymTable().update(varName, new IntType().defaultValue());
+                throw new MyException("End of file reached");
             } else {
                 IntValue newValue = new IntValue(Integer.parseInt(line));
                 prg.getSymTable().update(varName, newValue);
