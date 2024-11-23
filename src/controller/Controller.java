@@ -1,17 +1,14 @@
 package controller;
 
-import model.adt.*;
 import model.exception.MyException;
 import model.exception.StackException;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.*;
 import model.statement.IStmt;
-import model.value.IValue;
 import repo.IRepo;
 
-import java.io.BufferedReader;
-
 public class Controller {
-    private IRepo repo;
+    private final IRepo repo;
     boolean printFlag;
 
     public Controller(IRepo repo) {
@@ -50,10 +47,10 @@ public class Controller {
     }
 
     public void changePrgState(IStmt stmt) {
-        MyIStack<IStmt> stack = new MyStack<>();
-        MyIDictionary<String, IValue> symTable = new MyDictionary<>();
-        MyIList<IValue> out = new MyList<>();
-        MyIDictionary<String, BufferedReader> fileTable = new MyDictionary<>();
+        IExeStack stack = new ExeStack();
+        ISymTable symTable = new SymTable();
+        IOutput out = new Output();
+        IFileTable fileTable = new FileTable();
         PrgState prg = new PrgState(stack, symTable, out, fileTable, stmt);
         repo.changePrgState(prg);
     }

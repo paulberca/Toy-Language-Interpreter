@@ -1,14 +1,14 @@
 package model.expression;
 
 import model.exception.*;
+import model.prgstate.dataStruct.ISymTable;
 import model.type.*;
 import model.value.*;
-import model.adt.*;
 
 public class ArithExp implements IExpression {
-    private IExpression e1;
-    private IExpression e2;
-    private int op; //1-plus, 2-minus, 3-star, 4-divide
+    private final IExpression e1;
+    private final IExpression e2;
+    private final int op; //1-plus, 2-minus, 3-star, 4-divide
 
     public ArithExp(IExpression e1, IExpression e2, int op) {
         this.e1 = e1;
@@ -19,7 +19,7 @@ public class ArithExp implements IExpression {
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
+    public IValue eval(ISymTable tbl) throws MyException {
         IValue v1, v2;
         v1 = e1.eval(tbl);
         if (v1.getType().equals(new IntType())) {

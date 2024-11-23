@@ -1,15 +1,15 @@
 package model.statement;
 
-import model.adt.*;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.ISymTable;
 import model.value.IValue;
 import model.type.IType;
 
 public class AssignStmt implements IStmt {
-    private String id;
-    private IExpression exp;
+    private final String id;
+    private final IExpression exp;
 
     public AssignStmt(String id, IExpression exp) {
         this.id = id;
@@ -21,7 +21,7 @@ public class AssignStmt implements IStmt {
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        MyIDictionary<String, IValue> symTbl = state.getSymTable();
+        ISymTable symTbl = state.getSymTable();
 
         if (symTbl.isDefined(id)) {
             IValue val = exp.eval(symTbl);

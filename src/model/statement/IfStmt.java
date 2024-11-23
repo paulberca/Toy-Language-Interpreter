@@ -1,17 +1,17 @@
 package model.statement;
 
-import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.*;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.ISymTable;
 import model.type.BoolType;
 import model.value.BoolValue;
 import model.value.IValue;
 
 public class IfStmt implements IStmt {
-    private IExpression exp;
-    private IStmt thenS;
-    private IStmt elseS;
+    private final IExpression exp;
+    private final IStmt thenS;
+    private final IStmt elseS;
 
     public IfStmt(IExpression exp, IStmt thenS, IStmt elseS) {
         this.exp = exp;
@@ -24,7 +24,7 @@ public class IfStmt implements IStmt {
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        MyIDictionary<String, IValue> symTbl = state.getSymTable();
+        ISymTable symTbl = state.getSymTable();
         IValue val = exp.eval(symTbl);
 
         if (!val.getType().equals(new BoolType())) {

@@ -1,17 +1,17 @@
 package model.expression;
 
+import model.prgstate.dataStruct.ISymTable;
 import model.value.*;
-import model.adt.*;
 
 public class ValueExp implements IExpression {
-    private IValue e;
+    private final IValue e;
 
     public ValueExp(IValue e) {
         this.e = e;
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> tbl) {
+    public IValue eval(ISymTable tbl) {
         return e;
     }
 

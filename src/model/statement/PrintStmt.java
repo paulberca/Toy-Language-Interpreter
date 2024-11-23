@@ -1,13 +1,13 @@
 package model.statement;
 
-import model.adt.MyIList;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.IOutput;
 import model.value.IValue;
 
 public class PrintStmt implements IStmt {
-    private IExpression exp;
+    private final IExpression exp;
 
     public PrintStmt(IExpression exp) {
         this.exp = exp;
@@ -19,7 +19,7 @@ public class PrintStmt implements IStmt {
 
     public PrgState execute(PrgState state) throws MyException {
         IValue val = exp.eval(state.getSymTable());
-        MyIList<IValue> out = state.getOut();
+        IOutput out = state.getOut();
         out.add(val);
         return state;
     }

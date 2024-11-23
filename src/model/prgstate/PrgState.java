@@ -1,19 +1,16 @@
 package model.prgstate;
 
-import model.adt.*;
+import model.prgstate.dataStruct.*;
 import model.statement.*;
-import model.value.*;
-
-import java.io.BufferedReader;
 
 public class PrgState {
-    private MyIStack<IStmt> exeStack;
-    private MyIDictionary<String, IValue> symTable;
-    private MyIList<IValue> out;
-    private MyIDictionary<String, BufferedReader> fileTable;
+    private IExeStack exeStack;
+    private ISymTable symTable;
+    private IOutput out;
+    private IFileTable fileTable;
     private IStmt originalProgram;
 
-    public PrgState(MyIStack<IStmt> stk, MyIDictionary<String, IValue> symtbl, MyIList<IValue> ot, MyIDictionary<String, BufferedReader> ft,IStmt prg) {
+    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IStmt prg) {
         exeStack = stk;
         symTable = symtbl;
         out = ot;
@@ -22,19 +19,19 @@ public class PrgState {
         stk.push(prg);
     }
 
-    public MyIStack<IStmt> getExeStack() {
+    public IExeStack getExeStack() {
         return exeStack;
     }
 
-    public MyIDictionary<String, IValue> getSymTable() {
+    public ISymTable getSymTable() {
         return symTable;
     }
 
-    public MyIList<IValue> getOut() {
+    public IOutput getOut() {
         return out;
     }
 
-    public MyIDictionary<String, BufferedReader> getFileTable() {
+    public IFileTable getFileTable() {
         return fileTable;
     }
 
@@ -46,19 +43,19 @@ public class PrgState {
         return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
     }
 
-    public void setExeStack(MyIStack<IStmt> stk) {
+    public void setExeStack(IExeStack stk) {
         exeStack = stk;
     }
 
-    public void setSymTable(MyIDictionary<String, IValue> symtbl) {
+    public void setSymTable(ISymTable symtbl) {
         symTable = symtbl;
     }
 
-    public void setOut(MyIList<IValue> ot) {
+    public void setOut(IOutput ot) {
         out = ot;
     }
 
-    public void setFileTable(MyIDictionary<String, BufferedReader> ft) {
+    public void setFileTable(IFileTable ft) {
         fileTable = ft;
     }
 

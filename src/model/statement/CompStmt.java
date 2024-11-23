@@ -1,12 +1,12 @@
 package model.statement;
 
-import model.adt.MyIStack;
 import model.exception.MyException;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.IExeStack;
 
 public class CompStmt implements IStmt {
-    private IStmt first;
-    private IStmt snd;
+    private final IStmt first;
+    private final IStmt snd;
 
     public CompStmt(IStmt first, IStmt snd) {
         this.first = first;
@@ -18,7 +18,7 @@ public class CompStmt implements IStmt {
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        MyIStack<IStmt> stk = state.getExeStack();
+        IExeStack stk = state.getExeStack();
         stk.push(snd);
         stk.push(first);
         return state;

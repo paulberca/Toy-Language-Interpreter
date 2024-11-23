@@ -1,9 +1,9 @@
 package model.statement;
 
-import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.*;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.IFileTable;
 import model.type.*;
 import model.value.*;
 
@@ -34,7 +34,7 @@ public class OpenRFile implements IStmt {
             throw new MyException("File name is not a string");
         }
 
-        MyIDictionary<String, BufferedReader> fileTable = prg.getFileTable();
+        IFileTable fileTable = prg.getFileTable();
         if (fileTable.isDefined(val.toString())) {
             throw new MyException("File is already in the file table");
         }
