@@ -8,13 +8,15 @@ public class PrgState {
     private ISymTable symTable;
     private IOutput out;
     private IFileTable fileTable;
+    private IHeap heap;
     private IStmt originalProgram;
 
-    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IStmt prg) {
+    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
         exeStack = stk;
         symTable = symtbl;
         out = ot;
         fileTable = ft;
+        heap = hp;
         originalProgram = prg.deepCopy();
         stk.push(prg);
     }
@@ -35,12 +37,16 @@ public class PrgState {
         return fileTable;
     }
 
+    public IHeap getHeap() {
+        return heap;
+    }
+
     public IStmt getOriginalProgram() {
         return originalProgram;
     }
 
     public String toString() {
-        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
+        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
     }
 
     public void setExeStack(IExeStack stk) {
@@ -57,6 +63,10 @@ public class PrgState {
 
     public void setFileTable(IFileTable ft) {
         fileTable = ft;
+    }
+
+    public void setHeap(IHeap hp) {
+        heap = hp;
     }
 
     public void setOriginalProgram(IStmt prg) {
