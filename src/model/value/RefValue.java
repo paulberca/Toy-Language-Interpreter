@@ -37,4 +37,9 @@ public class RefValue implements IValue {
     public IValue deepCopy() {
         return new RefValue(address, locationType);
     }
+
+    @Override
+    public String toString() {
+        return "(" + address + ", " + locationType.toString() + ")";
+    }
 }

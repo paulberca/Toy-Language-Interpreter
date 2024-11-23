@@ -16,9 +16,10 @@ public class Heap implements IHeap {
     }
 
     @Override
-    public void allocate(IValue value) {
+    public int allocate(IValue value) {
         heap.add(firstFree, value);
         firstFree++;
+        return firstFree - 1;
     }
 
     @Override

@@ -22,7 +22,8 @@ public class Main {
         ISymTable symTable = new SymTable();
         IOutput out = new Output();
         IFileTable fileTable = new FileTable();
-        PrgState prg = new PrgState(stack, symTable, out, fileTable, stmt);
+        IHeap heap = new Heap();
+        PrgState prg = new PrgState(stack, symTable, out, fileTable, heap, stmt);
 
         IRepo repo = new Repository(prg, "");
         Controller controller = new Controller(repo);
