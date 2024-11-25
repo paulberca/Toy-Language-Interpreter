@@ -1,14 +1,15 @@
 package model.expression;
 
-import model.adt.MyIDictionary;
 import model.exception.MyException;
+import model.prgstate.dataStruct.IHeap;
+import model.prgstate.dataStruct.ISymTable;
 import model.type.IntType;
 import model.value.*;
 
 public class RelationalExp implements IExpression {
-    private IExpression e1;
-    private IExpression e2;
-    private int op;     // 1: <, 2: <=, 3: ==, 4: !=, 5: >, 6: >=
+    private final IExpression e1;
+    private final IExpression e2;
+    private final int op;     // 1: <, 2: <=, 3: ==, 4: !=, 5: >, 6: >=
 
     public RelationalExp(IExpression e1, IExpression e2, int op) {
         this.e1 = e1;
@@ -16,11 +17,11 @@ public class RelationalExp implements IExpression {
         this.op = op;
     }
 
-    public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
+    public IValue eval(ISymTable tbl, IHeap hp) throws MyException {
         IValue v1, v2;
-        v1 = e1.eval(tbl);
+        v1 = e1.eval(tbl, hp);
         if (v1.getType().equals(new IntType())) {
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, hp);
             if (v2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue) v1;
                 IntValue i2 = (IntValue) v2;

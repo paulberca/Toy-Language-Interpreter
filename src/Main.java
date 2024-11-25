@@ -1,5 +1,6 @@
 import controller.Controller;
 import model.prgstate.PrgState;
+import model.prgstate.dataStruct.*;
 import model.statement.*;
 import model.type.IntType;
 import model.type.StringType;
@@ -7,9 +8,7 @@ import model.value.*;
 import model.expression.*;
 import repo.*;
 import view.View;
-import model.adt.*;
 
-import java.io.BufferedReader;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,11 +18,12 @@ public class Main {
     }
 
     public void testPrg(IStmt stmt) {
-        MyIStack<IStmt> stack = new MyStack<>();
-        MyIDictionary<String, IValue> symTable = new MyDictionary<>();
-        MyIList<IValue> out = new MyList<>();
-        MyIDictionary<String, BufferedReader> fileTable = new MyDictionary<>();
-        PrgState prg = new PrgState(stack, symTable, out, fileTable, stmt);
+        IExeStack stack = new ExeStack();
+        ISymTable symTable = new SymTable();
+        IOutput out = new Output();
+        IFileTable fileTable = new FileTable();
+        IHeap heap = new Heap();
+        PrgState prg = new PrgState(stack, symTable, out, fileTable, heap, stmt);
 
         IRepo repo = new Repository(prg, "");
         Controller controller = new Controller(repo);

@@ -1,13 +1,14 @@
 package model.expression;
 
-import model.adt.*;
 import model.exception.*;
+import model.prgstate.dataStruct.IHeap;
+import model.prgstate.dataStruct.ISymTable;
 import model.value.*;
 import model.type.*;
 
 public class LogicExp implements IExpression {
-    private IExpression e1;
-    private IExpression e2;
+    private final IExpression e1;
+    private final IExpression e2;
     LogicalOperator op;
 
     public LogicExp(IExpression e1, IExpression e2, LogicalOperator op) {
@@ -17,11 +18,11 @@ public class LogicExp implements IExpression {
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException {
+    public IValue eval(ISymTable tbl, IHeap hp) throws MyException {
         IValue v1, v2;
-        v1 = e1.eval(tbl);
+        v1 = e1.eval(tbl, hp);
         if (v1.getType().equals(new BoolType())) {
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, hp);
             if (v2.getType().equals(new BoolType())) {
                 BoolValue b1 = (BoolValue) v1;
                 BoolValue b2 = (BoolValue) v2;

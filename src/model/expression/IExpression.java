@@ -1,11 +1,12 @@
 package model.expression;
 
-import model.adt.*;
 import model.exception.*;
+import model.prgstate.dataStruct.IHeap;
+import model.prgstate.dataStruct.ISymTable;
 import model.value.*;
 
 public interface IExpression {
-    public IValue eval(MyIDictionary<String, IValue> tbl) throws MyException;
+    IValue eval(ISymTable tbl, IHeap hp) throws MyException;
 
     IExpression deepCopy();
 }
