@@ -3,9 +3,15 @@ package controller;
 import model.exception.MyException;
 import model.exception.StackException;
 import model.prgstate.PrgState;
-import model.prgstate.dataStruct.*;
 import model.statement.IStmt;
+import model.value.IValue;
+import model.value.RefValue;
 import repo.IRepo;
+import model.prgstate.dataStruct.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Controller {
     private final IRepo repo;
@@ -34,6 +40,7 @@ public class Controller {
                 }
                 oneStep(prg);
                 try { repo.logPrgStateExec(); } catch (MyException e) { System.out.println(e.getMessage()); }
+                prg.getHeap().setContent(unsafeGarbageCollector(getAddrFromSymTable(prg.getSymTable().getContent().values()), prg.getHeap().getContent()));
             } catch (MyException | StackException e) {
                 System.out.println(e.getMessage());
             }
@@ -55,4 +62,18 @@ public class Controller {
         PrgState prg = new PrgState(stack, symTable, out, fileTable, heap, stmt);
         repo.changePrgState(prg);
     }
+
+
+
+
+    // ugly stuff used for garbage collector
+
+    Map<Integer, IValue> unsafeGarbageCollector(List<Integer> symTableAddr, Map<Integer, IValue> heap) {
+        return heap.entrySet().stream().filter(e->symTableAddr.contains(e.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    List<Integer> getAddrFromSymTable(Collection<IValue> symTableValues) {
+        return symTableValues.stream().filter(v->v instanceof RefValue).map(v->{RefValue v1 = (RefValue) v; return v1.getAddress();}).collect(Collectors.toList());
+    }
+
 }

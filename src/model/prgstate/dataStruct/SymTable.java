@@ -4,6 +4,8 @@ import model.adt.MyDictionary;
 import model.adt.MyIDictionary;
 import model.value.IValue;
 
+import java.util.Map;
+
 public class SymTable implements ISymTable {
     private final MyIDictionary<String, IValue> symTable;
 
@@ -34,5 +36,19 @@ public class SymTable implements ISymTable {
     @Override
     public String toString() {
         return symTable.toString();
+    }
+
+
+
+
+
+
+
+
+
+    // ugly stuff used for garbage collector
+    @Override
+    public Map<String, IValue> getContent() {
+        return symTable.getContent();
     }
 }

@@ -80,6 +80,17 @@ public class Interpreter {
         Controller ctr7 = new Controller(repo7);
 
 
+        IStmt ex8 = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(new NewStmt("a", new VarExp("v")),
+                                        new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
+                                                new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
+        PrgState prg8 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex8);
+        IRepo repo8 = new Repository(prg8, "log8.txt");
+        Controller ctr8 = new Controller(repo8);
+
+
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", ex1.toString(), ctr1));
@@ -89,6 +100,7 @@ public class Interpreter {
         menu.addCommand(new RunExample("5", ex5.toString(), ctr5));
         menu.addCommand(new RunExample("6", ex6.toString(), ctr6));
         menu.addCommand(new RunExample("7", ex7.toString(), ctr7));
+        menu.addCommand(new RunExample("8", ex8.toString(), ctr8));
         menu.show();
     }
 }

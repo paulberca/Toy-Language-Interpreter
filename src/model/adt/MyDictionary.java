@@ -54,4 +54,18 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
         }
         return buffer.toString();
     }
+
+
+
+    // ugly stuff used for garbage collector
+
+    @Override
+    public void setContent(Map<TKey, TValue> newDict) {
+        this.dict = new HashMap<>(newDict);
+    }
+
+    @Override
+    public Map<TKey, TValue> getContent() {
+        return new HashMap<>(this.dict);
+    }
 }

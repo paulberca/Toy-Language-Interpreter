@@ -6,6 +6,8 @@ import model.exception.MyException;
 import model.exception.UndefinedVariable;
 import model.value.IValue;
 
+import java.util.Map;
+
 public class Heap implements IHeap {
     private final MyIDictionary<Integer, IValue> heap;
     private int firstFree;
@@ -51,5 +53,21 @@ public class Heap implements IHeap {
     @Override
     public String toString() {
         return heap.toString();
+    }
+
+
+
+
+
+    // ugly stuff used for garbage collector
+
+    @Override
+    public void setContent(Map<Integer, IValue> newHeap) {
+        heap.setContent(newHeap);
+    }
+
+    @Override
+    public Map<Integer, IValue> getContent() {
+        return heap.getContent();
     }
 }
