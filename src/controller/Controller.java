@@ -40,11 +40,7 @@ public class Controller {
                 oneStep(prg);
                 try { repo.logPrgStateExec(); } catch (MyException e) { System.out.println(e.getMessage()); }
 
-                // prg.getHeap().setContent(collector.unsafeGarbageCollector(collector.getAddrFromSymTable(prg.getSymTable().getContent().values()), prg.getHeap().getContent()));
-
-                List<Integer> symTableAddr = collector.getAddrFromSymTable(new ArrayList<>(prg.getSymTable().getContent().values()));
-                Set<Integer> reachableAddr = collector.computeReachableAddr(symTableAddr, prg.getHeap().getContent());
-                prg.getHeap().setContent(collector.safeGarbageCollector(reachableAddr, prg.getHeap().getContent()));
+                garbageCollector(prg, collector);
 
             } catch (MyException | StackException e) {
                 System.out.println(e.getMessage());
@@ -66,5 +62,13 @@ public class Controller {
         IHeap heap = new Heap();
         PrgState prg = new PrgState(stack, symTable, out, fileTable, heap, stmt);
         repo.changePrgState(prg);
+    }
+
+    private void garbageCollector(PrgState prg, GarbageCollector collector) {
+        // prg.getHeap().setContent(collector.unsafeGarbageCollector(collector.getAddrFromSymTable(prg.getSymTable().getContent().values()), prg.getHeap().getContent()));
+
+        List<Integer> symTableAddr = collector.getAddrFromSymTable(new ArrayList<>(prg.getSymTable().getContent().values()));
+        Set<Integer> reachableAddr = collector.computeReachableAddr(symTableAddr, prg.getHeap().getContent());
+        prg.getHeap().setContent(collector.safeGarbageCollector(reachableAddr, prg.getHeap().getContent()));
     }
 }
