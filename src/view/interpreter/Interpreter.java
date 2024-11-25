@@ -91,6 +91,14 @@ public class Interpreter {
         Controller ctr8 = new Controller(repo8);
 
 
+        IStmt ex9 = new CompStmt(new VarDeclStmt("v", new IntType()),
+                new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
+                        new WhileStmt(new RelationalExp(new VarExp("v"), new ValueExp(new IntValue(0)), 5), new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 2))))));
+        PrgState prg9 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex9);
+        IRepo repo9 = new Repository(prg9, "log9.txt");
+        Controller ctr9 = new Controller(repo9);
+
+
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", ex1.toString(), ctr1));
@@ -101,6 +109,7 @@ public class Interpreter {
         menu.addCommand(new RunExample("6", ex6.toString(), ctr6));
         menu.addCommand(new RunExample("7", ex7.toString(), ctr7));
         menu.addCommand(new RunExample("8", ex8.toString(), ctr8));
+        menu.addCommand(new RunExample("9", ex9.toString(), ctr9));
         menu.show();
     }
 }

@@ -1,6 +1,5 @@
 package model.prgstate.dataStruct;
 
-import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.value.IValue;
 
