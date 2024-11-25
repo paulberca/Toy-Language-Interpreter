@@ -38,7 +38,7 @@ public class ReadFile implements IStmt {
 
         IValue val;
         try {
-            val = exp.eval(prg.getSymTable());
+            val = exp.eval(prg.getSymTable(), prg.getHeap());
         } catch (Exception e) {
             throw new MyException("Error evaluating expression: " + e.getMessage());
         }

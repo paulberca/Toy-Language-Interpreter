@@ -25,7 +25,7 @@ public class NewStmt implements IStmt {
         if (symTbl.isDefined(name)) {
             IType type = symTbl.lookup(name).getType();
             if (type instanceof RefType) {
-                IValue value = expression.eval(symTbl);
+                IValue value = expression.eval(symTbl, state.getHeap());
                 RefValue refValue = (RefValue) symTbl.lookup(name);
                 if (value.getType().equals(refValue.getLocationType())) {
                     int address = state.getHeap().allocate(value);
@@ -44,7 +44,7 @@ public class NewStmt implements IStmt {
         }
 
         return state;
-//        IValue value = expression.eval(state.getSymTable());
+//        IValue value = expression.eval(state.getSymTable(), state.getHeap());
 //        state.getSymTable().add(name, new RefValue(state.getHeap().allocate(value), value.getType()));
 //        return state;
     }

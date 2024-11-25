@@ -46,7 +46,7 @@ public class PrgState {
     }
 
     public String toString() {
-        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
+        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
     }
 
     public void setExeStack(IExeStack stk) {

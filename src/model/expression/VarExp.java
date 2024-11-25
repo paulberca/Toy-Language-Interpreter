@@ -1,6 +1,7 @@
 package model.expression;
 
 import model.exception.*;
+import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
 import model.value.*;
 
@@ -12,7 +13,7 @@ public class VarExp implements IExpression {
     }
 
     @Override
-    public IValue eval(ISymTable tbl) throws MyException {
+    public IValue eval(ISymTable tbl, IHeap hp) throws MyException {
         return tbl.lookup(id);
     }
 

@@ -25,7 +25,7 @@ public class IfStmt implements IStmt {
 
     public PrgState execute(PrgState state) throws MyException {
         ISymTable symTbl = state.getSymTable();
-        IValue val = exp.eval(symTbl);
+        IValue val = exp.eval(symTbl, state.getHeap());
 
         if (!val.getType().equals(new BoolType())) {
             throw new MyException("If condition is not a boolean");

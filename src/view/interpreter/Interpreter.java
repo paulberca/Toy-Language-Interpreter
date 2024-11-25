@@ -58,6 +58,28 @@ public class Interpreter {
         IRepo repo5 = new Repository(prg5, "log5.txt");
         Controller ctr5 = new Controller(repo5);
 
+
+        IStmt ex6 = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(new NewStmt("a", new VarExp("v")),
+                                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                                new PrintStmt(new ArithExp(new ReadHeapExp(new ReadHeapExp(new VarExp("a"))), new ValueExp(new IntValue(5)), 1)))))));
+        PrgState prg6 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex6);
+        IRepo repo6 = new Repository(prg6, "log6.txt");
+        Controller ctr6 = new Controller(repo6);
+
+
+        IStmt ex7 = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                new CompStmt(new WriteHeapStmt("v", new ValueExp(new IntValue(30))),
+                                        new PrintStmt(new ArithExp(new ReadHeapExp(new VarExp("v")), new ValueExp(new IntValue(5)), 1))))));
+        PrgState prg7 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex7);
+        IRepo repo7 = new Repository(prg7, "log7.txt");
+        Controller ctr7 = new Controller(repo7);
+
+
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", ex1.toString(), ctr1));
@@ -65,6 +87,8 @@ public class Interpreter {
         menu.addCommand(new RunExample("3", ex3.toString(), ctr3));
         menu.addCommand(new RunExample("4", ex4.toString(), ctr4));
         menu.addCommand(new RunExample("5", ex5.toString(), ctr5));
+        menu.addCommand(new RunExample("6", ex6.toString(), ctr6));
+        menu.addCommand(new RunExample("7", ex7.toString(), ctr7));
         menu.show();
     }
 }

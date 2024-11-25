@@ -1,5 +1,6 @@
 package model.expression;
 
+import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
 import model.value.*;
 
@@ -11,7 +12,7 @@ public class ValueExp implements IExpression {
     }
 
     @Override
-    public IValue eval(ISymTable tbl) {
+    public IValue eval(ISymTable tbl, IHeap hp) {
         return e;
     }
 

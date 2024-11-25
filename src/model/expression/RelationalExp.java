@@ -1,6 +1,7 @@
 package model.expression;
 
 import model.exception.MyException;
+import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
 import model.type.IntType;
 import model.value.*;
@@ -16,11 +17,11 @@ public class RelationalExp implements IExpression {
         this.op = op;
     }
 
-    public IValue eval(ISymTable tbl) throws MyException {
+    public IValue eval(ISymTable tbl, IHeap hp) throws MyException {
         IValue v1, v2;
-        v1 = e1.eval(tbl);
+        v1 = e1.eval(tbl, hp);
         if (v1.getType().equals(new IntType())) {
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, hp);
             if (v2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue) v1;
                 IntValue i2 = (IntValue) v2;

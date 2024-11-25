@@ -26,7 +26,7 @@ public class OpenRFile implements IStmt {
     public PrgState execute(PrgState prg) throws MyException {
         IValue val;
         try {
-            val = exp.eval(prg.getSymTable());
+            val = exp.eval(prg.getSymTable(), prg.getHeap());
         } catch (Exception e) {
             throw new MyException("Error evaluating expression: " + e.getMessage());
         }
