@@ -38,11 +38,15 @@ public class SymTable implements ISymTable {
         return symTable.toString();
     }
 
+    @Override
 
-
-
-
-
+    public ISymTable deepCopy() {
+        SymTable newSymTable = new SymTable();
+        for (String key : symTable.keySet()) {
+            newSymTable.add(key, symTable.lookup(key));
+        }
+        return newSymTable;
+    }
 
 
 

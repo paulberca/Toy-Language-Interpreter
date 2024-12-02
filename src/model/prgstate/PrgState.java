@@ -12,8 +12,10 @@ public class PrgState {
     private IFileTable fileTable;
     private IHeap heap;
     private IStmt originalProgram;
+    private static int id = 0;
 
     public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
+        id++;
         exeStack = stk;
         symTable = symtbl;
         out = ot;
@@ -27,15 +29,9 @@ public class PrgState {
         return !exeStack.isEmpty();
     }
 
-    PrgState oneStep(PrgState state) throws MyException {
-        IExeStack stk = state.getExeStack();
-        IStmt crtStmt;
-        try {
-            crtStmt = stk.pop();
-        } catch (StackException e) {
-            throw new MyException("prgState is empty");
-        }
-        return crtStmt.execute(state);
+    public PrgState oneStep() throws MyException, StackException {
+        IStmt crtStmt = exeStack.pop();
+        return crtStmt.execute(this);
     }
 
     public IExeStack getExeStack() {
@@ -63,7 +59,7 @@ public class PrgState {
     }
 
     public String toString() {
-        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
+        return "ID: " + id + "\nExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
     }
 
     public void setExeStack(IExeStack stk) {

@@ -46,7 +46,7 @@ public class OpenRFile implements IStmt {
             throw new MyException("File opening error: " + e.getMessage());
         }
 
-        return prg;
+        return null;
     }
 
     @Override

@@ -44,6 +44,6 @@ public class CloseRFile implements IStmt {
             throw new MyException("Error closing file: " + e.getMessage());
         }
 
-        return prg;
+        return null;
     }
 }

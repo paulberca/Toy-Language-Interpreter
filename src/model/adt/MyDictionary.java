@@ -4,6 +4,7 @@ import model.exception.UndefinedVariable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
     private Map<TKey, TValue> dict;
@@ -55,6 +56,10 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
         return buffer.toString();
     }
 
+    @Override
+    public Set<TKey> keySet() {
+        return dict.keySet();
+    }
 
 
     // stuff used for garbage collector

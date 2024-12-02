@@ -14,7 +14,7 @@ public interface ISymTable {
 
     void add(String key, IValue val);
 
-
+    ISymTable deepCopy();
 
 
     // stuff used for garbage collector

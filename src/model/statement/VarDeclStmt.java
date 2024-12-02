@@ -16,7 +16,7 @@ public class VarDeclStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) {
         state.getSymTable().add(name, typ.defaultValue());
-        return state;
+        return null;
     }
 
     @Override
