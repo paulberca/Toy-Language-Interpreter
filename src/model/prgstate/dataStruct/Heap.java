@@ -59,7 +59,7 @@ public class Heap implements IHeap {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
 
     @Override
     public void setContent(Map<Integer, IValue> newHeap) {

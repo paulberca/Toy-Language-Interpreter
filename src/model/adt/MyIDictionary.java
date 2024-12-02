@@ -18,7 +18,7 @@ public interface MyIDictionary<TKey, TValue> {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
 
     void setContent(Map<TKey, TValue> newDict);
     Map<TKey, TValue> getContent();

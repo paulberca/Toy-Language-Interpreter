@@ -2,14 +2,14 @@ package repo;
 
 import model.exception.MyException;
 import model.prgstate.PrgState;
+import java.util.List;
 
 public interface IRepo {
-    PrgState getCrtPrg();
+    List<PrgState> getPrgList();
 
-    void changePrgState(PrgState prg);
+    void setPrgList(List<PrgState> newPrgList);
 
-    void logPrgStateExec() throws MyException;
+    void logPrgStateExec(PrgState prg) throws MyException;
+
     void clearFile() throws MyException;
-
-    void changeFilePath(String newFilePath);
 }

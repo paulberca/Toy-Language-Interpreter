@@ -46,7 +46,7 @@ public class SymTable implements ISymTable {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
     @Override
     public Map<String, IValue> getContent() {
         return symTable.getContent();

@@ -57,7 +57,7 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
 
     @Override
     public void setContent(Map<TKey, TValue> newDict) {

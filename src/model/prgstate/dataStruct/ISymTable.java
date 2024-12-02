@@ -17,6 +17,6 @@ public interface ISymTable {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
     Map<String, IValue> getContent();
 }

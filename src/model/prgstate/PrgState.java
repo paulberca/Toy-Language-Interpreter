@@ -1,5 +1,7 @@
 package model.prgstate;
 
+import model.exception.MyException;
+import model.exception.StackException;
 import model.prgstate.dataStruct.*;
 import model.statement.*;
 
@@ -19,6 +21,21 @@ public class PrgState {
         heap = hp;
         originalProgram = prg.deepCopy();
         stk.push(prg);
+    }
+
+    public boolean isNotCompleted() {
+        return !exeStack.isEmpty();
+    }
+
+    PrgState oneStep(PrgState state) throws MyException {
+        IExeStack stk = state.getExeStack();
+        IStmt crtStmt;
+        try {
+            crtStmt = stk.pop();
+        } catch (StackException e) {
+            throw new MyException("prgState is empty");
+        }
+        return crtStmt.execute(state);
     }
 
     public IExeStack getExeStack() {
