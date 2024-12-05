@@ -1,35 +1,34 @@
 package repo;
 
 import java.io.*;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.exception.MyException;
 import model.prgstate.*;
 
 public class Repository implements IRepo {
-    private PrgState prg;
-    private String logFilePath;
+    private List<PrgState> prgList;
+    private final String logFilePath;
 
     public Repository(PrgState prg, String logFilePath) {
-        this.prg = prg;
+        this.prgList = new ArrayList<>();
+        prgList.add(prg);
         this.logFilePath = logFilePath;
     }
 
-    public void changePrgState(PrgState newPrg) {
-        prg = newPrg;
-    }
-
-    public PrgState getCrtPrg() {
-        return prg;
+    @Override
+    public List<PrgState> getPrgList() {
+        return prgList;
     }
 
     @Override
-    public void changeFilePath(String newFilePath) {
-        logFilePath = newFilePath;
+    public void setPrgList(List<PrgState> newPrgList) {
+        prgList = newPrgList;
     }
 
     @Override
-    public void logPrgStateExec() throws MyException{
+    public void logPrgStateExec(PrgState prg) throws MyException{
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath,  true)))) {
             writer.print(prg.toString());
             writer.println("-".repeat(50));

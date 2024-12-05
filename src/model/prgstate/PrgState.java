@@ -1,5 +1,7 @@
 package model.prgstate;
 
+import model.exception.MyException;
+import model.exception.StackException;
 import model.prgstate.dataStruct.*;
 import model.statement.*;
 
@@ -10,8 +12,11 @@ public class PrgState {
     private IFileTable fileTable;
     private IHeap heap;
     private IStmt originalProgram;
+    private final int id;
+    private static int nextId = 0;
 
     public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
+        id = getId();
         exeStack = stk;
         symTable = symtbl;
         out = ot;
@@ -19,6 +24,21 @@ public class PrgState {
         heap = hp;
         originalProgram = prg.deepCopy();
         stk.push(prg);
+    }
+
+    public synchronized int getId() {
+        nextId++;
+        return nextId;
+    }
+
+    public boolean isNotCompleted() {
+        return !exeStack.isEmpty();
+    }
+
+    public PrgState oneStep() throws MyException, StackException {
+        
+        IStmt crtStmt = exeStack.pop();
+        return crtStmt.execute(this);
     }
 
     public IExeStack getExeStack() {
@@ -46,7 +66,7 @@ public class PrgState {
     }
 
     public String toString() {
-        return "ExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
+        return "ID: " + id + "\nExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
     }
 
     public void setExeStack(IExeStack stk) {

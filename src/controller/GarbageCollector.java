@@ -31,9 +31,21 @@ public class GarbageCollector {
         return reachable;
     }
 
-    public Map<Integer, IValue> safeGarbageCollector(Set<Integer> reachableAddr, Map<Integer, IValue> heap) {
+
+/*    public Map<Integer, IValue> safeGarbageCollector(Set<Integer> reachableAddr, Map<Integer, IValue> heap) {
         return heap.entrySet().stream()
                 .filter(e->reachableAddr.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }= */
+
+    // this is a more straightforward implementation of the safeGarbageCollector method
+    public Map<Integer, IValue> safeGarbageCollector(Set<Integer> reachableAddr, Map<Integer, IValue> heap) {
+        Map<Integer, IValue> newHeap = new HashMap<>();
+        for (Integer key : heap.keySet()) {
+            if (reachableAddr.contains(key)) {
+                newHeap.put(key, heap.get(key));
+            }
+        }
+        return newHeap;
     }
 }

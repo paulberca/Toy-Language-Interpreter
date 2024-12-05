@@ -43,10 +43,10 @@ public class NewStmt implements IStmt {
             throw new MyException("The used variable " + name + " was not declared before");
         }
 
-        return state;
+        return null;
 //        IValue value = expression.eval(state.getSymTable(), state.getHeap());
 //        state.getSymTable().add(name, new RefValue(state.getHeap().allocate(value), value.getType()));
-//        return state;
+//        return null;
     }
 
     @Override

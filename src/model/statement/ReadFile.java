@@ -61,6 +61,6 @@ public class ReadFile implements IStmt {
             throw new MyException("Error reading from file: " + e.getMessage());
         }
 
-        return prg;
+        return null;
     }
 }

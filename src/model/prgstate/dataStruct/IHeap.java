@@ -15,7 +15,7 @@ public interface IHeap {
 
 
 
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
 
     void setContent(Map<Integer, IValue> newHeap);
     Map<Integer, IValue> getContent();

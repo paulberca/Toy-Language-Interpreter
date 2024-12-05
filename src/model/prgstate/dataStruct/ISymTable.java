@@ -14,9 +14,9 @@ public interface ISymTable {
 
     void add(String key, IValue val);
 
+    ISymTable deepCopy();
 
 
-
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
     Map<String, IValue> getContent();
 }

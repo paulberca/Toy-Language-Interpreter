@@ -3,6 +3,7 @@ package model.adt;
 import model.exception.UndefinedVariable;
 
 import java.util.Map;
+import java.util.Set;
 
 public interface MyIDictionary<TKey, TValue> {
     boolean isDefined(TKey key);
@@ -15,10 +16,10 @@ public interface MyIDictionary<TKey, TValue> {
 
     void delete(TKey key) throws UndefinedVariable;
 
+    Set<TKey> keySet();
 
 
-
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
 
     void setContent(Map<TKey, TValue> newDict);
     Map<TKey, TValue> getContent();

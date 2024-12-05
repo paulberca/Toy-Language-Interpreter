@@ -38,15 +38,19 @@ public class SymTable implements ISymTable {
         return symTable.toString();
     }
 
+    @Override
+
+    public ISymTable deepCopy() {
+        SymTable newSymTable = new SymTable();
+        for (String key : symTable.keySet()) {
+            newSymTable.add(key, symTable.lookup(key));
+        }
+        return newSymTable;
+    }
 
 
 
-
-
-
-
-
-    // ugly stuff used for garbage collector
+    // stuff used for garbage collector
     @Override
     public Map<String, IValue> getContent() {
         return symTable.getContent();
