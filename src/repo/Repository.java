@@ -11,8 +11,9 @@ public class Repository implements IRepo {
     private List<PrgState> prgList;
     private final String logFilePath;
 
-    public Repository(String logFilePath) {
+    public Repository(PrgState prg, String logFilePath) {
         this.prgList = new ArrayList<>();
+        prgList.add(prg);
         this.logFilePath = logFilePath;
     }
 

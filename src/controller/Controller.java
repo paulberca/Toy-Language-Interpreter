@@ -1,17 +1,15 @@
 package controller;
 
 import model.exception.MyException;
-import model.exception.StackException;
 import model.prgstate.PrgState;
-import model.statement.IStmt;
 import repo.IRepo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Controller {
@@ -19,7 +17,7 @@ public class Controller {
     boolean printFlag;
     private ExecutorService executor;
 
-    public Controller(IRepo repo, ExecutorService executor) {
+    public Controller(IRepo repo) {
         this.repo = repo;
         printFlag = true;
     }
@@ -27,6 +25,7 @@ public class Controller {
     private void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
         prgList.forEach(prg -> {
             try {
+                displayCrtPrgState(prg);
                 repo.logPrgStateExec(prg);
             } catch (MyException e) {
                 throw new RuntimeException(e);
@@ -47,6 +46,7 @@ public class Controller {
 
         prgList.forEach(prg -> {
             try {
+                displayCrtPrgState(prg);
                 repo.logPrgStateExec(prg);
             } catch (MyException e) {
                 throw new RuntimeException(e);
@@ -56,6 +56,27 @@ public class Controller {
         repo.setPrgList(prgList);
     }
 
+    public void allStep() throws InterruptedException, MyException {
+        executor = Executors.newFixedThreadPool(2);
+        List<PrgState> prgList = removeCompletedPrg(repo.getPrgList());
+        GarbageCollector collector = new GarbageCollector();
+
+        repo.clearFile();
+
+        while (!prgList.isEmpty()) {
+            for (PrgState prg : prgList) {
+                List<Integer> symTableAddr = collector.getAddrFromSymTable(new ArrayList<>(prg.getSymTable().getContent().values()));
+                Set<Integer> reachableAddr = collector.computeReachableAddr(symTableAddr, prg.getHeap().getContent());
+                prg.getHeap().setContent(collector.safeGarbageCollector(reachableAddr, prg.getHeap().getContent()));
+            }
+
+            oneStepForAllPrg(prgList);
+            prgList = removeCompletedPrg(repo.getPrgList());
+        }
+        executor.shutdownNow();
+
+        repo.setPrgList(prgList);
+    }
 
 //    public void allStep() {
 //        PrgState prg = repo.getCrtPrg();
@@ -69,7 +90,7 @@ public class Controller {
 //                if (printFlag) {
 //                    displayCrtPrgState(prg);
 //                }
-//                .oneStep();
+//                oneStep();
 //                try { repo.logPrgStateExec(); } catch (MyException e) { System.out.println(e.getMessage()); }
 //
 //                List<Integer> symTableAddr = collector.getAddrFromSymTable(new ArrayList<>(prg.getSymTable().getContent().values()));

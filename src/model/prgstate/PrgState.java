@@ -12,10 +12,11 @@ public class PrgState {
     private IFileTable fileTable;
     private IHeap heap;
     private IStmt originalProgram;
-    private static int id = 0;
+    private final int id;
+    private static int nextId = 0;
 
     public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
-        id++;
+        id = getId();
         exeStack = stk;
         symTable = symtbl;
         out = ot;
@@ -25,11 +26,17 @@ public class PrgState {
         stk.push(prg);
     }
 
+    public synchronized int getId() {
+        nextId++;
+        return nextId;
+    }
+
     public boolean isNotCompleted() {
         return !exeStack.isEmpty();
     }
 
     public PrgState oneStep() throws MyException, StackException {
+        
         IStmt crtStmt = exeStack.pop();
         return crtStmt.execute(this);
     }
