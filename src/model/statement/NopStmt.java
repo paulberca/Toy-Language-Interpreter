@@ -1,7 +1,9 @@
 package model.statement;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.prgstate.PrgState;
+import model.type.IType;
 
 public class NopStmt implements IStmt {
     public NopStmt() {
@@ -15,6 +17,11 @@ public class NopStmt implements IStmt {
     @Override
     public String toString() {
         return "nop";
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        return typeEnv;
     }
 
     @Override

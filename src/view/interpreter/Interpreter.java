@@ -1,6 +1,7 @@
 package view.interpreter;
 
 import controller.Controller;
+import model.adt.MyDictionary;
 import model.expression.*;
 import model.prgstate.PrgState;
 import model.prgstate.dataStruct.*;
@@ -14,12 +15,22 @@ import view.menu.TextMenu;
 public class Interpreter {
     public static void main(String[] args) {
         IStmt ex1 = new CompStmt(new VarDeclStmt("v", new IntType()), new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(2))), new PrintStmt(new VarExp("v"))));
+        try {
+            ex1.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg1 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex1);
         IRepo repo1 = new Repository(prg1, "log1.txt");
         Controller ctr1 = new Controller(repo1);
 
 
         IStmt ex2 = new CompStmt(new VarDeclStmt("a", new IntType()), new CompStmt(new VarDeclStmt("b", new IntType()), new CompStmt(new AssignStmt("a", new ArithExp(new ValueExp(new IntValue(6)), new ArithExp(new ValueExp(new IntValue(3)), new ValueExp(new IntValue(5)), 3), 1)), new CompStmt(new AssignStmt("b", new ArithExp(new VarExp("a"), new ValueExp(new IntValue(1)), 1)), new PrintStmt(new VarExp("b"))))));
+        try {
+            ex2.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg2 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex2);
         IRepo repo2 = new Repository(prg2, "log2.txt");
         Controller ctr2 = new Controller(repo2);
@@ -30,6 +41,11 @@ public class Interpreter {
                         new CompStmt(new AssignStmt("a", new ValueExp(new BoolValue(true))),
                                 new CompStmt(new IfStmt(new VarExp("a"), new AssignStmt("v", new ValueExp(new IntValue(2))), new AssignStmt("v", new ValueExp(new IntValue(3)))),
                                         new PrintStmt(new VarExp("v"))))));
+        try {
+            ex3.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg3 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex3);
         IRepo repo3 = new Repository(prg3, "log3.txt");
         Controller ctr3 = new Controller(repo3);
@@ -44,6 +60,11 @@ public class Interpreter {
                                                         new CompStmt(new ReadFile(new VarExp("varf"), "varc"),
                                                                 new CompStmt(new PrintStmt(new VarExp("varc")),
                                                                         new CloseRFile(new VarExp("varf"))))))))));
+        try {
+            ex4.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg4 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex4);
         IRepo repo4 = new Repository(prg4, "log4.txt");
         Controller ctr4 = new Controller(repo4);
@@ -54,6 +75,11 @@ public class Interpreter {
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
                                         new CompStmt(new PrintStmt(new VarExp("v")),
                                                 new PrintStmt(new VarExp("a")))))));
+        try {
+            ex5.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg5 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex5);
         IRepo repo5 = new Repository(prg5, "log5.txt");
         Controller ctr5 = new Controller(repo5);
@@ -65,6 +91,11 @@ public class Interpreter {
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
                                         new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
                                                 new PrintStmt(new ArithExp(new ReadHeapExp(new ReadHeapExp(new VarExp("a"))), new ValueExp(new IntValue(5)), 1)))))));
+        try {
+            ex6.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg6 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex6);
         IRepo repo6 = new Repository(prg6, "log6.txt");
         Controller ctr6 = new Controller(repo6);
@@ -75,6 +106,11 @@ public class Interpreter {
                         new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
                                 new CompStmt(new WriteHeapStmt("v", new ValueExp(new IntValue(30))),
                                         new PrintStmt(new ArithExp(new ReadHeapExp(new VarExp("v")), new ValueExp(new IntValue(5)), 1))))));
+        try {
+            ex7.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg7 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex7);
         IRepo repo7 = new Repository(prg7, "log7.txt");
         Controller ctr7 = new Controller(repo7);
@@ -86,6 +122,11 @@ public class Interpreter {
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
                                         new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
                                                 new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
+        try {
+            ex8.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg8 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex8);
         IRepo repo8 = new Repository(prg8, "log8.txt");
         Controller ctr8 = new Controller(repo8);
@@ -94,6 +135,11 @@ public class Interpreter {
         IStmt ex9 = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
                         new WhileStmt(new RelationalExp(new VarExp("v"), new ValueExp(new IntValue(0)), 5), new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 2))))));
+        try {
+            ex9.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg9 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex9);
         IRepo repo9 = new Repository(prg9, "log9.txt");
         Controller ctr9 = new Controller(repo9);
@@ -108,6 +154,11 @@ public class Interpreter {
                                                         new CompStmt(new NewStmt("y", new ValueExp(new IntValue(50))),
                                                                 new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
                                                                         new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a"))))))))))));
+        try {
+            ex10.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg10 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex10);
         IRepo repo10 = new Repository(prg10, "log10.txt");
         Controller ctr10 = new Controller(repo10);
@@ -122,6 +173,11 @@ public class Interpreter {
                                                             new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(32))),
                                                                     new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp(new VarExp("a"))))))),
                                             new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
+        try {
+            ex11.typecheck(new MyDictionary<>());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         PrgState prg11 = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), ex11);
         IRepo repo = new Repository(prg11, "log11.txt");
         Controller ctr11 = new Controller(repo);

@@ -1,5 +1,6 @@
 package model.statement;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
@@ -52,5 +53,16 @@ public class WriteHeapStmt implements IStmt {
     @Override
     public IStmt deepCopy() {
         return new WriteHeapStmt(name, expression.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeVar = typeEnv.lookup(name);
+        IType typeExp = expression.typecheck(typeEnv);
+        if (typeVar.equals(new RefType(typeExp))) {
+            return typeEnv;
+        } else {
+            throw new MyException("WriteHeap: right hand side and left hand side have different types");
+        }
     }
 }

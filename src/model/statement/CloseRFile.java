@@ -1,8 +1,10 @@
 package model.statement;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
+import model.type.IType;
 import model.type.StringType;
 import model.value.IValue;
 
@@ -45,5 +47,14 @@ public class CloseRFile implements IStmt {
         }
 
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType expType = exp.typecheck(typeEnv);
+        if (!expType.equals(new StringType())) {
+            throw new MyException("CloseRFile: expression is not a string");
+        }
+        return typeEnv;
     }
 }

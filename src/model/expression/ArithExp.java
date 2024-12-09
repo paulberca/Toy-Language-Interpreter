@@ -1,5 +1,6 @@
 package model.expression;
 
+import model.adt.MyIDictionary;
 import model.exception.*;
 import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
@@ -44,6 +45,20 @@ public class ArithExp implements IExpression {
             else throw new UndefinedVariable("Second operand <" + v2 + "> is not an integer");
         }
         throw new UndefinedVariable("First operand <" + v1 + ">is not an integer");
+    }
+
+    @Override
+    public IType typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType type1, type2;
+        type1 = e1.typecheck(typeEnv);
+        type2 = e2.typecheck(typeEnv);
+        if (type1.equals(new IntType())) {
+            if (type2.equals(new IntType())) {
+                return new IntType();
+            }
+            else throw new MyException("Second operand is not an integer");
+        }
+        else throw new MyException("First operand is not an integer");
     }
 
     @Override

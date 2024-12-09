@@ -18,6 +18,7 @@ public interface MyIDictionary<TKey, TValue> {
 
     Set<TKey> keySet();
 
+    MyIDictionary<TKey, TValue> deepCopy();
 
     // stuff used for garbage collector
 
