@@ -61,6 +61,15 @@ public class MyDictionary<TKey, TValue> implements MyIDictionary<TKey, TValue> {
         return dict.keySet();
     }
 
+    @Override
+    public MyIDictionary<TKey, TValue> deepCopy() {
+        MyIDictionary<TKey, TValue> newDict = new MyDictionary<>();
+        for (TKey key : dict.keySet()) {
+            newDict.add(key, dict.get(key));
+        }
+        return newDict;
+    }
+
 
     // stuff used for garbage collector
 

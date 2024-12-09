@@ -1,7 +1,10 @@
 package model.expression;
 
+import model.adt.MyIDictionary;
+import model.exception.MyException;
 import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
+import model.type.IType;
 import model.value.*;
 
 public class ValueExp implements IExpression {
@@ -14,6 +17,11 @@ public class ValueExp implements IExpression {
     @Override
     public IValue eval(ISymTable tbl, IHeap hp) {
         return e;
+    }
+
+    @Override
+    public IType typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        return e.getType();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package model.statement;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.*;
 import model.prgstate.PrgState;
@@ -52,5 +53,14 @@ public class OpenRFile implements IStmt {
     @Override
     public IStmt deepCopy() {
         return new OpenRFile(exp.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType expType = exp.typecheck(typeEnv);
+        if (!expType.equals(new StringType())) {
+            throw new MyException("OpenRFile: expression is not a string");
+        }
+        return typeEnv;
     }
 }

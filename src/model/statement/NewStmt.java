@@ -1,5 +1,6 @@
 package model.statement;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.expression.IExpression;
 import model.prgstate.PrgState;
@@ -52,6 +53,18 @@ public class NewStmt implements IStmt {
     @Override
     public IStmt deepCopy() {
         return new NewStmt(name, expression.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typevar = typeEnv.lookup(name);
+        IType typexp = expression.typecheck(typeEnv);
+        if (typevar.equals(new RefType(typexp))) {
+            return typeEnv;
+        }
+        else {
+            throw new MyException("New statement: right hand side and left hand side have different types");
+        }
     }
 
     @Override
