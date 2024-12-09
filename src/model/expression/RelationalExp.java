@@ -1,8 +1,11 @@
 package model.expression;
 
+import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.prgstate.dataStruct.IHeap;
 import model.prgstate.dataStruct.ISymTable;
+import model.type.BoolType;
+import model.type.IType;
 import model.type.IntType;
 import model.value.*;
 
@@ -17,6 +20,7 @@ public class RelationalExp implements IExpression {
         this.op = op;
     }
 
+    @Override
     public IValue eval(ISymTable tbl, IHeap hp) throws MyException {
         IValue v1, v2;
         v1 = e1.eval(tbl, hp);
@@ -43,8 +47,23 @@ public class RelationalExp implements IExpression {
         throw new MyException("First operand is not an integer");
     }
 
+    @Override
     public IExpression deepCopy() {
         return new RelationalExp(e1.deepCopy(), e2.deepCopy(), op);
+    }
+
+    @Override
+    public IType typecheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType type1, type2;
+        type1 = e1.typecheck(typeEnv);
+        type2 = e2.typecheck(typeEnv);
+        if (type1.equals(new IntType())) {
+            if (type2.equals(new IntType())) {
+                return new BoolType();
+            }
+            else throw new MyException("Second operand is not an integer");
+        }
+        throw new MyException("First operand is not an integer");
     }
 
     public String toString() {
