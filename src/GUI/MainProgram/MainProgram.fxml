@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainProgram.MainProgramController">
+   <children>
+      <Label fx:id="programLabel" alignment="TOP_CENTER" text="Program: " textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="runOneStepButton" layoutX="1082.1999999999998" layoutY="652.6" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" text="Run One Step" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="3.400000000000091">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <HBox fx:id="mainBox" layoutX="8.0" layoutY="44.0" prefHeight="641.0" prefWidth="1200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="44.0">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="42.0" text="Heap" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="heapTable" prefHeight="647.0" prefWidth="208.0">
+                    <columns>
+                      <TableColumn prefWidth="103.99999696016312" text="Address" />
+                      <TableColumn prefWidth="103.19999694824219" text="Value" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="30.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <TextField fx:id="nrOfPrgStates" alignment="CENTER" prefHeight="14.0" prefWidth="200.0" text="Number of PrgStates: ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="42.0" text="Out" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="50.0" />
+                     </padding>
+                  </Label>
+                  <ListView fx:id="outList" prefHeight="631.0" prefWidth="200.0" />
+               </children>
+               <padding>
+                  <Insets right="30.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="630.0" prefWidth="160.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="77.0" prefWidth="106.0" text="File Table" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <ListView fx:id="fileTableList" prefHeight="534.0" prefWidth="200.0" />
+                  <Label alignment="CENTER" prefHeight="77.0" prefWidth="106.0" text="PrgState IDs" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <ListView fx:id="PrgStateIDsList" prefHeight="631.0" prefWidth="110.0" />
+               </children>
+               <padding>
+                  <Insets right="30.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="630.0" prefWidth="460.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="204.0" text="SymTable" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="symTable" prefHeight="584.0" prefWidth="430.0">
+                    <columns>
+                      <TableColumn prefWidth="175.20001524686813" text="Variable Name" />
+                      <TableColumn minWidth="0.0" prefWidth="255.9999237060547" text="Value" />
+                    </columns>
+                  </TableView>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="ExeStack" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <ListView fx:id="exeStackList" prefHeight="389.0" prefWidth="430.0" />
+               </children>
+               <padding>
+                  <Insets right="30.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

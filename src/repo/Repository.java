@@ -22,6 +22,10 @@ public class Repository implements IRepo {
         return prgList;
     }
 
+    public int getProgramsCount() {
+        return prgList.size();
+    }
+
     @Override
     public void setPrgList(List<PrgState> newPrgList) {
         prgList = newPrgList;

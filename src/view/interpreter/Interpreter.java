@@ -53,7 +53,7 @@ public class Interpreter {
                 new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
                         new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
-                                        new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
+                                        new CompStmt(new NewStmt("v", new ValueExp(new BoolValue(true))),
                                                 new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
         IStmt ex9 = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
