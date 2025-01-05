@@ -1,5 +1,6 @@
-package view.GUI;
+package GUI;
 
+import GUI.MainProgram.MainProgram;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.ListView;
+import model.adt.MyDictionary;
 import model.statement.IStmt;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -50,9 +52,25 @@ public class SetProgramWindow extends Application {
 
         runButton.setOnAction(event -> {
             if (selectedProgram != null) {
+                try {
+                    selectedProgram.typecheck(new MyDictionary<>());
+                } catch (Exception e) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Type check error");
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
+                    return;
+                }
+
                 MainProgram mainProgram = new MainProgram(selectedProgram);
                 Stage newStage = new Stage();
-                mainProgram.start(newStage);
+                try {
+                    mainProgram.start(newStage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                primaryStage.close();
             }
             else {
                 Alert alert = new Alert(AlertType.WARNING);

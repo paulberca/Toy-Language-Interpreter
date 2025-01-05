@@ -2,6 +2,7 @@ package model.adt;
 
 import model.exception.StackException;
 
+import java.util.List;
 import java.util.Stack;
 
 public class MyStack<T> implements MyIStack<T> {
@@ -46,5 +47,10 @@ public class MyStack<T> implements MyIStack<T> {
             buffer.append(value).append("\n");
         }
         return buffer.toString();
+    }
+
+    @Override
+    public List<T> toList() {
+        return this.stack.stream().toList();
     }
 }

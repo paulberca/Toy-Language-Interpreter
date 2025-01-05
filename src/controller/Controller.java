@@ -22,7 +22,7 @@ public class Controller {
         printFlag = true;
     }
 
-    private void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
+    public void oneStepForAllPrg(List<PrgState> prgList, ExecutorService ex) throws InterruptedException {
         prgList.forEach(prg -> {
             try {
                 displayCrtPrgState(prg);
@@ -36,7 +36,7 @@ public class Controller {
                         .map((PrgState p) -> (Callable<PrgState>)(() -> { return p.oneStep(); }))
                         .toList();
 
-        List<PrgState> newPrgList = executor.invokeAll(callList).stream()
+        List<PrgState> newPrgList = ex.invokeAll(callList).stream()
                 .map(future -> {try { return future.get(); }
                                                 catch (Exception e) { throw new RuntimeException(e); }})
                 .filter(p -> p != null)
@@ -70,7 +70,7 @@ public class Controller {
                 prg.getHeap().setContent(collector.safeGarbageCollector(reachableAddr, prg.getHeap().getContent()));
             }
 
-            oneStepForAllPrg(prgList);
+            oneStepForAllPrg(prgList, executor);
             prgList = removeCompletedPrg(repo.getPrgList());
         }
         executor.shutdownNow();
@@ -104,7 +104,7 @@ public class Controller {
 //        displayCrtPrgState(prg);
 //    }
 
-    private List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
+    public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
         return inPrgList.stream().filter(p -> p.isNotCompleted()).collect(Collectors.toList());
     }
 

@@ -1,6 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.GUI.SetProgramWindow;
+import GUI.SetProgramWindow;
 
 public class Main extends Application {
     @Override

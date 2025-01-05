@@ -16,7 +16,7 @@ public class PrgState {
     private static int nextId = 0;
 
     public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
-        id = getId();
+        id = getNextID();
         exeStack = stk;
         symTable = symtbl;
         out = ot;
@@ -26,9 +26,13 @@ public class PrgState {
         stk.push(prg);
     }
 
-    public synchronized int getId() {
+    public synchronized int getNextID() {
         nextId++;
         return nextId;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public boolean isNotCompleted() {

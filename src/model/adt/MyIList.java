@@ -2,6 +2,8 @@ package model.adt;
 
 import model.exception.ListException;
 
+import java.util.List;
+
 public interface MyIList<T> {
     void add(T value);
 
@@ -14,4 +16,6 @@ public interface MyIList<T> {
     int size();
 
     boolean isEmpty();
+
+    List<T> toList();
 }

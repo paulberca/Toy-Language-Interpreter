@@ -5,6 +5,8 @@ import model.adt.MyStack;
 import model.exception.StackException;
 import model.statement.IStmt;
 
+import java.util.List;
+
 public class ExeStack implements IExeStack {
     private final MyIStack<IStmt> stack;
 
@@ -30,5 +32,10 @@ public class ExeStack implements IExeStack {
     @Override
     public String toString() {
         return stack.toString();
+    }
+
+    @Override
+    public List<IStmt> toList() {
+        return stack.toList();
     }
 }

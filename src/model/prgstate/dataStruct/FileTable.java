@@ -4,6 +4,7 @@ import model.adt.MyDictionary;
 import model.adt.MyIDictionary;
 
 import java.io.BufferedReader;
+import java.util.List;
 
 public class FileTable implements IFileTable {
     private final MyIDictionary<String, BufferedReader> fileTable;
@@ -35,5 +36,10 @@ public class FileTable implements IFileTable {
     @Override
     public String toString() {
         return fileTable.toString();
+    }
+
+    @Override
+    public List<String> toList() {
+        return fileTable.getContent().keySet().stream().toList();
     }
 }
