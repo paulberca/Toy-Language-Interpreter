@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
-import model.exception.MyException;
 import model.prgstate.PrgState;
 import model.prgstate.dataStruct.*;
 import model.statement.IStmt;
@@ -28,12 +27,12 @@ import java.util.concurrent.Executors;
 
 public class MainProgram extends Application {
     private final IStmt stmt;
-    private PrgState prgState;
-    private IRepo repo;
-    private Controller ctr;
+    private final PrgState prgState;
+    private final IRepo repo;
+    private final Controller ctr;
     private ExecutorService executor;
     private List<PrgState> prgList;
-    private int currentPrgStateIndex;
+    private int currentPrgStateID;
 
     public MainProgram(IStmt stmt) {
         this.stmt = stmt;
@@ -54,10 +53,7 @@ public class MainProgram extends Application {
 
         initializeComponents(controller);
 
-        controller.runOneStepButton.setOnAction(event -> {
-            runOneStep();
-            refreshViews(controller);
-        });
+        controller.runOneStepButton.setOnAction(_ -> runOneStep(controller));
 //        controller.runOneStepButton.setOnAction(event -> {
 //            try {
 //                ctr.allStep();
@@ -67,7 +63,13 @@ public class MainProgram extends Application {
 //            }
 //        });
 
-
+        controller.PrgStateIDsList.getSelectionModel().selectedIndexProperty().addListener((_, _, newValue) -> {
+            if (newValue != null && newValue.intValue() >= 0) {
+                currentPrgStateID = controller.PrgStateIDsList.getItems().get(newValue.intValue());
+                refreshExeStack(controller);
+                refreshSymTableView(controller);
+            }
+        });
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Run Program");
@@ -80,7 +82,7 @@ public class MainProgram extends Application {
         controller.nrOfPrgStates.setText("No of PrgStates: " + repo.getPrgList().size());
         controller.PrgStateIDsList.getItems().add(repo.getPrgList().getFirst().getId());
 
-        currentPrgStateIndex = 1;
+        currentPrgStateID = 1;
 
         executor = Executors.newFixedThreadPool(2);
         prgList = ctr.removeCompletedPrg(repo.getPrgList());
@@ -94,7 +96,7 @@ public class MainProgram extends Application {
         }
     }
 
-    private void runOneStep() {
+    private void runOneStep(MainProgramController controller) {
         GarbageCollector collector = new GarbageCollector();
 
         if (!prgList.isEmpty()) {
@@ -114,6 +116,8 @@ public class MainProgram extends Application {
                 alert.setContentText(e.getMessage());
             }
             prgList = ctr.removeCompletedPrg(repo.getPrgList());
+
+            refreshViews(controller);
         }
         else {
             executor.shutdownNow();
@@ -154,7 +158,26 @@ public class MainProgram extends Application {
 
     private void refreshExeStack(MainProgramController controller) {
         controller.exeStackList.getItems().clear();
-        List<IStmt> exeStack = prgState.getExeStack().toList();
+        PrgState currentPrgState = null;
+        for (PrgState prg : prgList) {
+            if (prg.getId() == currentPrgStateID) {
+                currentPrgState = prg;
+                break;
+            }
+        }
+        if (currentPrgState == null) {
+            System.out.println("Could not find PrgState with ID: " + currentPrgStateID);
+            if (!prgList.isEmpty()) {
+                currentPrgState = prgList.getFirst();
+                currentPrgStateID = prgList.getFirst().getId();
+                System.out.println("Setting currentPrgState to PrgState with ID: " + currentPrgStateID);
+            }
+            else {
+                System.out.println("prgList is empty");
+                return;
+            }
+        }
+        List<IStmt> exeStack = currentPrgState.getExeStack().toList();
         for (IStmt stmt : exeStack) {
             controller.exeStackList.getItems().add(stmt.toString());
         }
@@ -176,7 +199,23 @@ public class MainProgram extends Application {
     }
 
     private void refreshSymTableView(MainProgramController controller) {
-        controller.symTableView.setItems(FXCollections.observableArrayList(prgState.getSymTable().getContent().entrySet()));
+        PrgState currentPrgState = null;
+        for (PrgState prg : prgList) {
+            if (prg.getId() == currentPrgStateID) {
+                currentPrgState = prg;
+                break;
+            }
+        }
+        if (currentPrgState == null) {
+            if (!prgList.isEmpty()) {
+                currentPrgState = prgList.getFirst();
+                currentPrgStateID = prgList.getFirst().getId();
+            }
+            else {
+                return;
+            }
+        }
+        controller.symTableView.setItems(FXCollections.observableArrayList(currentPrgState.getSymTable().getContent().entrySet()));
         controller.symTableView.getColumns().clear();
 
         TableColumn<Map.Entry<String, IValue>, String> varNameColumn = new TableColumn<>("Variable Name");
