@@ -19,12 +19,12 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="runOneStepButton" layoutX="1082.1999999999998" layoutY="652.6" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" text="Run One Step" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="3.400000000000091">
+      <Button fx:id="runOneStepButton" layoutX="1080.0" layoutY="642.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" text="Run One Step" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.rightAnchor="5.599999999999909">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <HBox fx:id="mainBox" layoutX="8.0" layoutY="44.0" prefHeight="641.0" prefWidth="1200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="44.0">
+      <HBox fx:id="mainBox" layoutX="8.0" layoutY="44.0" prefHeight="641.0" prefWidth="1072.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="44.0">
          <children>
             <VBox alignment="CENTER">
                <children>
@@ -106,7 +106,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TableView fx:id="symTable" prefHeight="584.0" prefWidth="430.0">
+                  <TableView fx:id="symTableView" prefHeight="584.0" prefWidth="430.0">
                     <columns>
                       <TableColumn prefWidth="175.20001524686813" text="Variable Name" />
                       <TableColumn minWidth="0.0" prefWidth="255.9999237060547" text="Value" />
@@ -122,9 +122,6 @@
                   </Label>
                   <ListView fx:id="exeStackList" prefHeight="389.0" prefWidth="430.0" />
                </children>
-               <padding>
-                  <Insets right="30.0" />
-               </padding>
             </VBox>
          </children>
          <padding>

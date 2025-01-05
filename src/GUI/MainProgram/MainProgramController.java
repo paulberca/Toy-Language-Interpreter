@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import model.prgstate.PrgState;
-import model.statement.IStmt;
+import model.value.IValue;
 import repo.IRepo;
 
-import java.util.List;
+import java.util.Map;
 
 public class MainProgramController {
     Controller controller;
@@ -25,22 +25,22 @@ public class MainProgramController {
     public HBox mainBox;
 
     @FXML
-    public TableView<?> heapTable;
+    public TableView<Map.Entry<Integer, IValue>> heapTable;
 
     @FXML
     public TextField nrOfPrgStates;
 
     @FXML
-    public ListView<?> outList;
+    public ListView<String> outList;
 
     @FXML
-    public ListView<?> fileTableList;
+    public ListView<String> fileTableList;
 
     @FXML
     public ListView<Integer> PrgStateIDsList;
 
     @FXML
-    public TableView<?> symTable;
+    public TableView<Map.Entry<String, IValue>> symTableView;
 
     @FXML
     public ListView<String> exeStackList;
