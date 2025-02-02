@@ -71,6 +71,10 @@ public class MainProgram extends Application {
             }
         });
 
+        primaryStage.setOnCloseRequest(event -> {
+            executor.shutdownNow();
+        });
+
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Run Program");
         primaryStage.show();

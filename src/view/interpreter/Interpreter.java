@@ -78,6 +78,21 @@ public class Interpreter {
                                                                 new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp(new VarExp("a"))))))),
                                                 new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
 
+        IStmt ex12 = new CompStmt(new VarDeclStmt("v", new IntType()),
+                new CompStmt(new VarDeclStmt("a", new RefType(new IntType())),
+                        new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
+                                new CompStmt(new NewStmt("a", new ValueExp(new IntValue(22))),
+                                        new CompStmt(new ForkStmt(
+                                                new CompStmt(new VarDeclStmt("x", new IntType()),
+                                                        new CompStmt(new AssignStmt("x", new ValueExp(new IntValue(5))),
+                                                                new CompStmt(new PrintStmt(new VarExp("x")),
+                                                                        new ForkStmt(
+                                                                                new CompStmt(new VarDeclStmt("y", new IntType()),
+                                                                                        new CompStmt(new AssignStmt("y", new ValueExp(new IntValue(15))),
+                                                                                                new PrintStmt(new VarExp("y"))))))))),
+                                                new CompStmt(new PrintStmt(new VarExp("v")),
+                                                        new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
+
         ArrayList<IStmt> hardcodedStatements = new ArrayList<>();
         hardcodedStatements.add(ex1);
         hardcodedStatements.add(ex2);
@@ -90,6 +105,7 @@ public class Interpreter {
         hardcodedStatements.add(ex9);
         hardcodedStatements.add(ex10);
         hardcodedStatements.add(ex11);
+        hardcodedStatements.add(ex12);
 
         return hardcodedStatements;
     }
