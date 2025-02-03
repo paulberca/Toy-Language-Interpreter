@@ -1,6 +1,6 @@
 package model.prgstate.dataStruct;
 
-import model.adt.MyDictionary;
+import model.adt.MyConcurrentDictionary;
 import model.adt.MyIDictionary;
 import model.exception.MyException;
 import model.exception.UndefinedVariable;
@@ -13,7 +13,7 @@ public class Heap implements IHeap {
     private int firstFree;
 
     public Heap() {
-        heap = new MyDictionary<>();
+        heap = new MyConcurrentDictionary<>();
         firstFree = 1;
     }
 

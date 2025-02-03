@@ -1,6 +1,6 @@
 package model.prgstate.dataStruct;
 
-import model.adt.MyDictionary;
+import model.adt.MyConcurrentDictionary;
 import model.adt.MyIDictionary;
 
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ public class FileTable implements IFileTable {
     private final MyIDictionary<String, BufferedReader> fileTable;
 
     public FileTable() {
-        fileTable = new MyDictionary<>();
+        fileTable = new MyConcurrentDictionary<>();
     }
 
     @Override
