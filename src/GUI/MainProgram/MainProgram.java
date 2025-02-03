@@ -127,6 +127,8 @@ public class MainProgram extends Application {
             refreshViews(controller);
 
             prgList = ctr.removeCompletedPrg(repo.getPrgList());
+
+            refreshViews(controller);
         }
         else {
             executor.shutdownNow();
