@@ -119,6 +119,8 @@ public class MainProgram extends Application {
                 alert.setHeaderText("Error running one step");
                 alert.setContentText(e.getMessage());
             }
+            refreshViews(controller);
+
             prgList = ctr.removeCompletedPrg(repo.getPrgList());
 
             refreshViews(controller);
