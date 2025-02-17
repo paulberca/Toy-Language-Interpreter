@@ -37,10 +37,10 @@
                      </padding>
                   </Label>
                   <TableView fx:id="heapTable" prefHeight="647.0" prefWidth="208.0">
-                    <columns>
-                      <TableColumn prefWidth="103.99999696016312" text="Address" />
-                      <TableColumn prefWidth="103.19999694824219" text="Value" />
-                    </columns>
+                     <columns>
+                        <TableColumn prefWidth="103.99999696016312" text="Address" />
+                        <TableColumn prefWidth="103.19999694824219" text="Value" />
+                     </columns>
                   </TableView>
                </children>
                <padding>
@@ -106,11 +106,11 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TableView fx:id="symTableView" prefHeight="584.0" prefWidth="430.0">
-                    <columns>
-                      <TableColumn prefWidth="175.20001524686813" text="Variable Name" />
-                      <TableColumn minWidth="0.0" prefWidth="255.9999237060547" text="Value" />
-                    </columns>
+                  <TableView fx:id="symTableView" prefHeight="182.0" prefWidth="454.0">
+                     <columns>
+                        <TableColumn prefWidth="175.20001524686813" text="Variable Name" />
+                        <TableColumn minWidth="0.0" prefWidth="255.9999237060547" text="Value" />
+                     </columns>
                   </TableView>
                   <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="ExeStack" textAlignment="CENTER">
                      <font>
@@ -120,7 +120,21 @@
                         <Insets bottom="5.0" top="10.0" />
                      </padding>
                   </Label>
-                  <ListView fx:id="exeStackList" prefHeight="389.0" prefWidth="430.0" />
+                  <ListView fx:id="exeStackList" prefHeight="144.0" prefWidth="454.0" />
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="LockTable" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="lockTableView" prefHeight="194.0" prefWidth="454.0">
+                     <columns>
+                        <TableColumn prefWidth="160.0000137090683" text="Lock" />
+                        <TableColumn minWidth="0.0" prefWidth="223.99999237060547" text="PrgID" />
+                     </columns>
+                  </TableView>
                </children>
             </VBox>
          </children>

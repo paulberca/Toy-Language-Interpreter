@@ -58,6 +58,7 @@ public class Interpreter {
         IStmt ex9 = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
                         new WhileStmt(new RelationalExp(new VarExp("v"), new ValueExp(new IntValue(0)), 5), new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 2))))));
+
         IStmt ex10 = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
                 new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
                         new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
@@ -92,12 +93,91 @@ public class Interpreter {
                                                 new CompStmt(new PrintStmt(new VarExp("v")),
                                                         new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
 
+        // Ref int v1; Ref int v2; int x;  int q;new(v1,20);new(v2,30);newLock(x);fork(fork(lock(x);wh(v1,rh(v1)-1);unlock(x));lock(x);wh(v1,rh(v1)*10);unlock(x));newLock(q);fork(fork(lock(q);wh(v2,rh(v2)+5);unlock(q));lock(q);wh(v2,rh(v2)*10);unlock(q);nop;nop;nop;nop;lock(x); print(rh(v1)); unlock(x);lock(q); print(rh(v2)); unlock(q);
+        IStmt ex13 = new CompStmt(new VarDeclStmt("v1", new RefType(new IntType())),
+                new CompStmt(new VarDeclStmt("v2", new RefType(new IntType())),
+                        new CompStmt(new VarDeclStmt("x", new IntType()),
+                                new CompStmt(new VarDeclStmt("q", new IntType()),
+                                        new CompStmt(new NewStmt("v1", new ValueExp(new IntValue(20))),
+                                                new CompStmt(new NewStmt("v2", new ValueExp(new IntValue(30))),
+                                                        new CompStmt(new NewLockStmt("x"),
+                                                                new CompStmt(new ForkStmt(
+                                                                        new CompStmt(new ForkStmt(
+                                                                                new CompStmt(new LockStmt("x"),
+                                                                                        new CompStmt(new WriteHeapStmt("v1", new ArithExp(new ReadHeapExp(new VarExp("v1")), new ValueExp(new IntValue(1)), 2)),
+                                                                                                new UnlockStmt("x")))),
+                                                                                new CompStmt(new LockStmt("x"),
+                                                                                        new CompStmt(new WriteHeapStmt("v1", new ArithExp(new ReadHeapExp(new VarExp("v1")), new ValueExp(new IntValue(10)), 3)),
+                                                                                                new UnlockStmt("x"))))),
+                                                                        new CompStmt(new NewLockStmt("q"),
+                                                                                new CompStmt(new ForkStmt(
+                                                                                        new CompStmt(new ForkStmt(
+                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                        new CompStmt(new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp(new VarExp("v2")), new ValueExp(new IntValue(5)), 1)),
+                                                                                                                new UnlockStmt("q")))),
+                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                        new CompStmt(new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp(new VarExp("v2")), new ValueExp(new IntValue(10)), 3)),
+                                                                                                                new UnlockStmt("q"))))),
+                                                                                        new CompStmt(new NopStmt(),
+                                                                                                new CompStmt(new NopStmt(),
+                                                                                                        new CompStmt(new NopStmt(),
+                                                                                                                new CompStmt(new NopStmt(),
+                                                                                                                        new CompStmt(new LockStmt("x"),
+                                                                                                                                new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v1"))),
+                                                                                                                                        new CompStmt(new UnlockStmt("x"),
+                                                                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                                                                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v2"))),
+                                                                                                                                                                new UnlockStmt("q"))))))))))))))))))));
 
-        IStmt ex13 = new CompStmt(new VarDeclStmt("a", new RefType(new IntType())),
+        IStmt ex14 = new CompStmt(new VarDeclStmt("v1", new RefType(new IntType())),
+                new CompStmt(new VarDeclStmt("v2", new RefType(new IntType())),
+                        new CompStmt(new VarDeclStmt("x", new BoolType()),
+                                new CompStmt(new VarDeclStmt("q", new IntType()),
+                                        new CompStmt(new NewStmt("v1", new ValueExp(new IntValue(20))),
+                                                new CompStmt(new NewStmt("v2", new ValueExp(new IntValue(30))),
+                                                        new CompStmt(new NewLockStmt("x"),
+                                                                new CompStmt(new ForkStmt(
+                                                                        new CompStmt(new ForkStmt(
+                                                                                new CompStmt(new LockStmt("x"),
+                                                                                        new CompStmt(new WriteHeapStmt("v1", new ArithExp(new ReadHeapExp(new VarExp("v1")), new ValueExp(new IntValue(1)), 2)),
+                                                                                                new UnlockStmt("x")))),
+                                                                                new CompStmt(new LockStmt("x"),
+                                                                                        new CompStmt(new WriteHeapStmt("v1", new ArithExp(new ReadHeapExp(new VarExp("v1")), new ValueExp(new IntValue(10)), 3)),
+                                                                                                new UnlockStmt("x"))))),
+                                                                        new CompStmt(new NewLockStmt("q"),
+                                                                                new CompStmt(new ForkStmt(
+                                                                                        new CompStmt(new ForkStmt(
+                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                        new CompStmt(new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp(new VarExp("v2")), new ValueExp(new IntValue(5)), 1)),
+                                                                                                                new UnlockStmt("q")))),
+                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                        new CompStmt(new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp(new VarExp("v2")), new ValueExp(new IntValue(10)), 3)),
+                                                                                                                new UnlockStmt("q"))))),
+                                                                                        new CompStmt(new NopStmt(),
+                                                                                                new CompStmt(new NopStmt(),
+                                                                                                        new CompStmt(new NopStmt(),
+                                                                                                                new CompStmt(new NopStmt(),
+                                                                                                                        new CompStmt(new LockStmt("x"),
+                                                                                                                                new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v1"))),
+                                                                                                                                        new CompStmt(new UnlockStmt("x"),
+                                                                                                                                                new CompStmt(new LockStmt("q"),
+                                                                                                                                                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v2"))),
+                                                                                                                                                                new UnlockStmt("q"))))))))))))))))))));
+
+
+        IStmt ex15 = new CompStmt(new VarDeclStmt("v2", new RefType(new IntType())),
+                new CompStmt(new VarDeclStmt("x", new IntType()),
+                        new CompStmt(new NewStmt("v2", new ValueExp(new IntValue(30))),
+                                new CompStmt(new NewLockStmt("x"), new CompStmt(new LockStmt("x"),
+                                        new CompStmt(new ForkStmt(new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp(new VarExp("v2")), new ValueExp(new IntValue(5)), 1))),
+                                                new CompStmt(new NopStmt(), new CompStmt(new NopStmt(), new CompStmt(new NopStmt(), new UnlockStmt("x"))))))))));
+
+        IStmt ex16 = new CompStmt(new VarDeclStmt("a", new RefType(new IntType())),
                 new CompStmt(new NewStmt("a", new ValueExp(new IntValue(20))),
                         new CompStmt(new ForStmt("v", new ValueExp(new IntValue(0)), new ValueExp(new IntValue(3)), new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 1),
                                 new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ReadHeapExp(new VarExp("a")), 3))))),
                                 new PrintStmt(new ReadHeapExp(new VarExp("a"))))));
+
 
         ArrayList<IStmt> hardcodedStatements = new ArrayList<>();
         hardcodedStatements.add(ex1);
@@ -113,6 +193,9 @@ public class Interpreter {
         hardcodedStatements.add(ex11);
         hardcodedStatements.add(ex12);
         hardcodedStatements.add(ex13);
+        hardcodedStatements.add(ex14);
+        hardcodedStatements.add(ex15);
+        hardcodedStatements.add(ex16);
 
         return hardcodedStatements;
     }
@@ -127,7 +210,7 @@ public class Interpreter {
             } catch (Exception e) {
                 System.out.println("Stmt " + i +  ": " + e.getMessage());
             }
-            PrgState prg = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), hardcodedStatements.get(i));
+            PrgState prg = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), new LockTable(), hardcodedStatements.get(i));
             IRepo repo = new Repository(prg, "log" + (i+1) + ".txt");
             Controller ctr = new Controller(repo);
             ctrs.add(ctr);

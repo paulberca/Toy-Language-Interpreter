@@ -36,7 +36,7 @@ public class MainProgram extends Application {
 
     public MainProgram(IStmt stmt) {
         this.stmt = stmt;
-        prgState = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), stmt);
+        prgState = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), new LockTable(), stmt);
         repo = new Repository(prgState, "log.txt");
         ctr = new Controller(repo);
     }
@@ -149,6 +149,7 @@ public class MainProgram extends Application {
         refreshOut(controller);
         refreshPrgStateIDList(controller);
         refreshSymTableView(controller);
+        refreshLockTableView(controller);
         refreshNrOfPrgStates(controller);
         refreshFileTable(controller);
     }
@@ -165,6 +166,20 @@ public class MainProgram extends Application {
 
         controller.heapTable.getColumns().add(addressColumn);
         controller.heapTable.getColumns().add(valueColumn);
+    }
+
+    private void refreshLockTableView(MainProgramController controller) {
+        controller.lockTableView.setItems(FXCollections.observableArrayList(prgState.getLockTable().getContent().entrySet()));
+        controller.lockTableView.getColumns().clear();
+
+        TableColumn<Map.Entry<Integer, Integer>, Integer> lockAddressColumn = new TableColumn<>("Lock");
+        lockAddressColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getKey()));
+
+        TableColumn<Map.Entry<Integer, Integer>, Integer> lockValueColumn = new TableColumn<>("PrgID");
+        lockValueColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getValue()));
+
+        controller.lockTableView.getColumns().add(lockAddressColumn);
+        controller.lockTableView.getColumns().add(lockValueColumn);
     }
 
     private void refreshExeStack(MainProgramController controller) {

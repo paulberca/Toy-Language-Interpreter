@@ -33,12 +33,12 @@ public class Controller {
         });
 
         List<Callable<PrgState>> callList = prgList.stream()
-                        .map((PrgState p) -> (Callable<PrgState>)(() -> { return p.oneStep(); }))
-                        .toList();
+                .map((PrgState p) -> (Callable<PrgState>)(() -> { return p.oneStep(); }))
+                .toList();
 
         List<PrgState> newPrgList = ex.invokeAll(callList).stream()
                 .map(future -> {try { return future.get(); }
-                                                catch (Exception e) { throw new RuntimeException(e); }})
+                catch (Exception e) { throw new RuntimeException(e); }})
                 .filter(p -> p != null)
                 .toList();
 

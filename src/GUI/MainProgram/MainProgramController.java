@@ -43,6 +43,9 @@ public class MainProgramController {
     public TableView<Map.Entry<String, IValue>> symTableView;
 
     @FXML
+    public TableView<Map.Entry<Integer, Integer>> lockTableView;
+
+    @FXML
     public ListView<String> exeStackList;
 
     public void setController(Controller controller) {

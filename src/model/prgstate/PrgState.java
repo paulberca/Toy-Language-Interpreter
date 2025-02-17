@@ -12,16 +12,18 @@ public class PrgState {
     private IFileTable fileTable;
     private IHeap heap;
     private IStmt originalProgram;
+    private final ILockTable lockTable;
     private final int id;
     private static int nextId = 0;
 
-    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp,  IStmt prg) {
+    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp, ILockTable locktbl, IStmt prg) {
         id = getNextID();
         exeStack = stk;
         symTable = symtbl;
         out = ot;
         fileTable = ft;
         heap = hp;
+        lockTable = locktbl;
         originalProgram = prg.deepCopy();
         stk.push(prg);
     }
@@ -40,7 +42,6 @@ public class PrgState {
     }
 
     public PrgState oneStep() throws MyException, StackException {
-        
         IStmt crtStmt = exeStack.pop();
         return crtStmt.execute(this);
     }
@@ -65,12 +66,23 @@ public class PrgState {
         return heap;
     }
 
+    public ILockTable getLockTable() {
+        return lockTable;
+    }
+
     public IStmt getOriginalProgram() {
         return originalProgram;
     }
 
     public String toString() {
-        return "ID: " + id + "\nExeStack:\n" + exeStack.toString() + "\nSymTable:\n" + symTable.toString() + "\nOut:\n" + out.toString() + "\n\nHeap:\n" + heap.toString() + "\nFileTable:\n" + fileTable.toString() + "\n";
+        return "ID: " + id
+                + "\nExeStack:\n" + exeStack.toString()
+                + "\nSymTable:\n" + symTable.toString()
+                + "\nOut:\n" + out.toString()
+                + "\n\nHeap:\n" + heap.toString()
+                + "\nFileTable:\n" + fileTable.toString()
+                + "\nLockTable:\n" + lockTable.toString()
+                + "\n";
     }
 
     public void setExeStack(IExeStack stk) {
