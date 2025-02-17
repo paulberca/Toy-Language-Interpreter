@@ -58,7 +58,6 @@ public class Interpreter {
         IStmt ex9 = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
                         new WhileStmt(new RelationalExp(new VarExp("v"), new ValueExp(new IntValue(0)), 5), new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 2))))));
-
         IStmt ex10 = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
                 new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
                         new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
@@ -93,6 +92,13 @@ public class Interpreter {
                                                 new CompStmt(new PrintStmt(new VarExp("v")),
                                                         new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
 
+
+        IStmt ex13 = new CompStmt(new VarDeclStmt("a", new RefType(new IntType())),
+                new CompStmt(new NewStmt("a", new ValueExp(new IntValue(20))),
+                        new CompStmt(new ForStmt("v", new ValueExp(new IntValue(0)), new ValueExp(new IntValue(3)), new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 1),
+                                new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ReadHeapExp(new VarExp("a")), 3))))),
+                                new PrintStmt(new ReadHeapExp(new VarExp("a"))))));
+
         ArrayList<IStmt> hardcodedStatements = new ArrayList<>();
         hardcodedStatements.add(ex1);
         hardcodedStatements.add(ex2);
@@ -106,6 +112,7 @@ public class Interpreter {
         hardcodedStatements.add(ex10);
         hardcodedStatements.add(ex11);
         hardcodedStatements.add(ex12);
+        hardcodedStatements.add(ex13);
 
         return hardcodedStatements;
     }
