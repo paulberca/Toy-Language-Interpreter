@@ -18,6 +18,33 @@ import view.menu.TextMenu;
 import java.util.ArrayList;
 
 public class Interpreter {
+
+    public static void main(String[] args) {
+        ArrayList<IStmt> hardcodedStatements = new Interpreter().getStatements();
+
+        ArrayList<Controller> ctrs = new ArrayList<>();
+        for (int i = 0; i < hardcodedStatements.size(); i++) {
+            try {
+                hardcodedStatements.get(i).typecheck(new MyDictionary<>());
+            } catch (Exception e) {
+                System.out.println("Stmt " + i +  ": " + e.getMessage());
+            }
+            PrgState prg = new PrgState(new ExeStack(), new MyStack<>(), new Output(), new FileTable(), new Heap(), new LockTable(), new ProcTable(), hardcodedStatements.get(i));
+            IRepo repo = new Repository(prg, "log" + (i+1) + ".txt");
+            Controller ctr = new Controller(repo);
+            ctrs.add(ctr);
+        }
+
+        TextMenu menu = new TextMenu();
+        menu.addCommand(new ExitCommand("0", "exit"));
+
+        for (int i = 0; i < ctrs.size(); i++) {
+            menu.addCommand(new RunExample(Integer.toString(i + 1), hardcodedStatements.get(i).toString(), ctrs.get(i)));
+        }
+
+        menu.show();
+    }
+
     public ArrayList<IStmt> getStatements() {
         IStmt ex1 = new CompStmt(new VarDeclStmt("v", new IntType()), new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(2))), new PrintStmt(new VarExp("v"))));
         IStmt ex2 = new CompStmt(new VarDeclStmt("a", new IntType()), new CompStmt(new VarDeclStmt("b", new IntType()), new CompStmt(new AssignStmt("a", new ArithExp(new ValueExp(new IntValue(6)), new ArithExp(new ValueExp(new IntValue(3)), new ValueExp(new IntValue(5)), 3), 1)), new CompStmt(new AssignStmt("b", new ArithExp(new VarExp("a"), new ValueExp(new IntValue(1)), 1)), new PrintStmt(new VarExp("b"))))));
@@ -241,6 +268,30 @@ public class Interpreter {
                 )
         );
 
+        IStmt ex18 = new CompStmt(new VarDeclStmt("b", new BoolType()),
+                new CompStmt(new VarDeclStmt("c", new IntType()),
+                        new CompStmt(new AssignStmt("b", new ValueExp(new BoolValue(true))),
+                                new CompStmt(new CondAssignStmt("c", new VarExp("b"), new ValueExp(new IntValue(100)), new ValueExp(new IntValue(200))),
+                                        new CompStmt(new PrintStmt(new VarExp("c")),
+                                                new CompStmt(new CondAssignStmt("c", new ValueExp(new BoolValue(false)), new ValueExp(new IntValue(100)), new ValueExp(new IntValue(200))),
+                                                        new PrintStmt(new VarExp("c"))))))));
+
+        IStmt ex19 = new CompStmt(new VarDeclStmt("v", new IntType()),
+                new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(0))),
+                        new CompStmt(new RepeatUntilStmt(
+                                new CompStmt(new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")), new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 2)))),
+                                        new AssignStmt("v", new ArithExp(new VarExp("v"), new ValueExp(new IntValue(1)), 1))),
+                                new RelationalExp(new VarExp("v"), new ValueExp(new IntValue(3)), 3)),
+                                new CompStmt(new VarDeclStmt("x", new IntType()),
+                                        new CompStmt(new VarDeclStmt("y", new IntType()),
+                                                new CompStmt(new VarDeclStmt("z", new IntType()),
+                                                        new CompStmt(new VarDeclStmt("w", new IntType()),
+                                                                new CompStmt(new AssignStmt("x", new ValueExp(new IntValue(1))),
+                                                                        new CompStmt(new AssignStmt("y", new ValueExp(new IntValue(2))),
+                                                                                new CompStmt(new AssignStmt("z", new ValueExp(new IntValue(3))),
+                                                                                        new CompStmt(new AssignStmt("w", new ValueExp(new IntValue(4))),
+                                                                                                new PrintStmt(new ArithExp(new VarExp("v"), new ValueExp(new IntValue(10)), 3)))))))))))));
+
 
 
         ArrayList<IStmt> hardcodedStatements = new ArrayList<>();
@@ -261,33 +312,9 @@ public class Interpreter {
         hardcodedStatements.add(ex15);
         hardcodedStatements.add(ex16);
         hardcodedStatements.add(ex17);
+        hardcodedStatements.add(ex18);
+        hardcodedStatements.add(ex19);
 
         return hardcodedStatements;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<IStmt> hardcodedStatements = new Interpreter().getStatements();
-
-        ArrayList<Controller> ctrs = new ArrayList<>();
-        for (int i = 0; i < hardcodedStatements.size(); i++) {
-            try {
-                hardcodedStatements.get(i).typecheck(new MyDictionary<>());
-            } catch (Exception e) {
-                System.out.println("Stmt " + i +  ": " + e.getMessage());
-            }
-            PrgState prg = new PrgState(new ExeStack(), new MyStack<>(), new Output(), new FileTable(), new Heap(), new LockTable(), new ProcTable(), hardcodedStatements.get(i));
-            IRepo repo = new Repository(prg, "log" + (i+1) + ".txt");
-            Controller ctr = new Controller(repo);
-            ctrs.add(ctr);
-        }
-
-        TextMenu menu = new TextMenu();
-        menu.addCommand(new ExitCommand("0", "exit"));
-
-        for (int i = 0; i < ctrs.size(); i++) {
-            menu.addCommand(new RunExample(Integer.toString(i + 1), hardcodedStatements.get(i).toString(), ctrs.get(i)));
-        }
-
-        menu.show();
     }
 }

@@ -90,7 +90,8 @@ public class SetProgramWindow extends Application {
         buttonBox.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
 
         VBox vbox = new VBox(labelBox, listView, buttonBox);
-        Scene scene = new Scene(vbox, 1200, 500);
+        listView.setPrefHeight(600);
+        Scene scene = new Scene(vbox, 1200, 600);
         primaryStage.setTitle("Select a program");
         primaryStage.setScene(scene);
         primaryStage.show();
