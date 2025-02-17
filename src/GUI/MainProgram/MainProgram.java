@@ -11,6 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import model.adt.MyDictionary;
+import model.adt.MyIDictionary;
+import model.adt.MyIList;
+import model.adt.MyStack;
 import model.prgstate.PrgState;
 import model.prgstate.dataStruct.*;
 import model.statement.IStmt;
@@ -36,7 +41,7 @@ public class MainProgram extends Application {
 
     public MainProgram(IStmt stmt) {
         this.stmt = stmt;
-        prgState = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), new LockTable(), stmt);
+        prgState = new PrgState(new ExeStack(), new MyStack<>(), new Output(), new FileTable(), new Heap(), new LockTable(), new ProcTable(), stmt);
         repo = new Repository(prgState, "log.txt");
         ctr = new Controller(repo);
     }
@@ -152,6 +157,7 @@ public class MainProgram extends Application {
         refreshLockTableView(controller);
         refreshNrOfPrgStates(controller);
         refreshFileTable(controller);
+        refreshProcTableView(controller);
     }
 
     private void refreshHeap(MainProgramController controller) {
@@ -268,6 +274,32 @@ public class MainProgram extends Application {
         for (String file : fileTable) {
             controller.fileTableList.getItems().add(file);
         }
+    }
+
+    private void refreshProcTableView(MainProgramController controller) {
+        MyIDictionary<String, String> procTable = new MyDictionary<>();
+        for (Map.Entry<String, Pair<MyIList<String>, IStmt>> entry : prgState.getProcTable().getContent().entrySet()) {
+            String name = entry.getKey();
+            MyIList<String> params = entry.getValue().getKey();
+            String procStr = name + "(" + params.toString() + ") ";
+
+            IStmt body = entry.getValue().getValue();
+            String bodyStr = body.toString();
+
+            procTable.add(procStr, bodyStr);
+        }
+
+        controller.procTableView.setItems(FXCollections.observableArrayList(procTable.getContent().entrySet()));
+        controller.procTableView.getColumns().clear();
+
+        TableColumn<Map.Entry<String, String>, String> procNameColumn = new TableColumn<>("Procedure Name");
+        procNameColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getKey()));
+
+        TableColumn<Map.Entry<String, String>, String> procBodyColumn = new TableColumn<>("Procedure Body");
+        procBodyColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getValue()));
+
+        controller.procTableView.getColumns().add(procNameColumn);
+        controller.procTableView.getColumns().add(procBodyColumn);
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package model.prgstate;
 
+import model.adt.MyIStack;
 import model.exception.MyException;
 import model.exception.StackException;
 import model.prgstate.dataStruct.*;
@@ -7,7 +8,7 @@ import model.statement.*;
 
 public class PrgState {
     private IExeStack exeStack;
-    private ISymTable symTable;
+    private MyIStack<ISymTable> symTables;
     private IOutput out;
     private IFileTable fileTable;
     private IHeap heap;
@@ -15,15 +16,20 @@ public class PrgState {
     private final ILockTable lockTable;
     private final int id;
     private static int nextId = 0;
+    private IProcTable procTable;
 
-    public PrgState(IExeStack stk, ISymTable symtbl, IOutput ot, IFileTable ft, IHeap hp, ILockTable locktbl, IStmt prg) {
+    public PrgState(IExeStack stk, MyIStack<ISymTable> symtbl, IOutput ot, IFileTable ft, IHeap hp, ILockTable locktbl, IProcTable procTbl, IStmt prg) {
         id = getNextID();
         exeStack = stk;
-        symTable = symtbl;
+        symTables = symtbl;
+        if (symTables.isEmpty()) {          // only for the first program state
+            symTables.push(new SymTable());
+        }
         out = ot;
         fileTable = ft;
         heap = hp;
         lockTable = locktbl;
+        procTable = procTbl;
         originalProgram = prg.deepCopy();
         stk.push(prg);
     }
@@ -51,7 +57,15 @@ public class PrgState {
     }
 
     public ISymTable getSymTable() {
-        return symTable;
+        try {
+            return symTables.peek();
+        } catch (StackException e) {
+            throw new RuntimeException("SymTable stack is empty");
+        }
+    }
+
+    public MyIStack<ISymTable> getSymTablesStack() {
+        return symTables;
     }
 
     public IOutput getOut() {
@@ -66,6 +80,10 @@ public class PrgState {
         return heap;
     }
 
+    public IProcTable getProcTable() {
+        return procTable;
+    }
+
     public ILockTable getLockTable() {
         return lockTable;
     }
@@ -77,11 +95,12 @@ public class PrgState {
     public String toString() {
         return "ID: " + id
                 + "\nExeStack:\n" + exeStack.toString()
-                + "\nSymTable:\n" + symTable.toString()
+                + "\nSymTable:\n" + symTables.toString()
                 + "\nOut:\n" + out.toString()
                 + "\n\nHeap:\n" + heap.toString()
                 + "\nFileTable:\n" + fileTable.toString()
                 + "\nLockTable:\n" + lockTable.toString()
+                + "\nProcTable:\n" + procTable.toString()
                 + "\n";
     }
 
@@ -89,9 +108,10 @@ public class PrgState {
         exeStack = stk;
     }
 
-    public void setSymTable(ISymTable symtbl) {
-        symTable = symtbl;
-    }
+//    error but not used anyways
+//    public void setSymTable(ISymTable symtbl) {
+//        symTables = symtbl;
+//    }
 
     public void setOut(IOutput ot) {
         out = ot;

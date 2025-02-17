@@ -22,7 +22,7 @@ public class MyConcurrentDictionary<TKey, TValue> implements MyIDictionary<TKey,
     @Override
     public void update(TKey key, TValue val) throws UndefinedVariable {
         if (!dict.containsKey(key)) {
-            throw new UndefinedVariable("Key not found in dictionary");
+            throw new UndefinedVariable("Key " + key + " not found in dictionary");
         }
         dict.put(key, val);
     }

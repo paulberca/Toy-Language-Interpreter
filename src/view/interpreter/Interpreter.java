@@ -2,6 +2,9 @@ package view.interpreter;
 
 import controller.Controller;
 import model.adt.MyDictionary;
+import model.adt.MyIList;
+import model.adt.MyList;
+import model.adt.MyStack;
 import model.expression.*;
 import model.prgstate.PrgState;
 import model.prgstate.dataStruct.*;
@@ -179,6 +182,67 @@ public class Interpreter {
                                 new PrintStmt(new ReadHeapExp(new VarExp("a"))))));
 
 
+        MyIList<String> proc12 = new MyList<>();
+        proc12.add("a");
+        proc12.add("b");
+        MyIList<IExpression> call121 = new MyList<>();
+        call121.add(new ArithExp(new VarExp("v"), new ValueExp(new IntValue(10)), 3));
+        call121.add(new VarExp("w"));
+        MyIList<IExpression> call122 = new MyList<>();
+        call122.add(new VarExp("v"));
+        call122.add(new VarExp("w"));
+
+        IStmt ex17 = new CompStmt(
+                new ProcDefStmt("sum", proc12,
+                        new CompStmt(
+                                new VarDeclStmt("v", new IntType()),
+                                new CompStmt(
+                                        new AssignStmt("v", new ArithExp(new VarExp("a"), new VarExp("b"), 1)),
+                                        new PrintStmt(new VarExp("v"))
+                                )
+                        )
+                ),
+                new CompStmt(
+                        new ProcDefStmt("product", proc12,
+                                new CompStmt(
+                                        new VarDeclStmt("v", new IntType()),
+                                        new CompStmt(
+                                                new AssignStmt("v", new ArithExp(new VarExp("a"), new VarExp("b"), 3)),
+                                                new PrintStmt(new VarExp("v"))
+                                        )
+                                )
+                        ),
+                        new CompStmt(
+                                new VarDeclStmt("v", new IntType()),
+                                new CompStmt(
+                                        new AssignStmt("v", new ValueExp(new IntValue(2))),
+                                        new CompStmt(
+                                                new VarDeclStmt("w", new IntType()),
+                                                new CompStmt(
+                                                        new AssignStmt("w", new ValueExp(new IntValue(5))),
+                                                        new CompStmt(
+                                                                new CallFStmt("sum", call121),
+                                                                new CompStmt(
+                                                                        new PrintStmt(new VarExp("v")),
+                                                                        new ForkStmt(
+                                                                                new CompStmt(
+                                                                                        new CallFStmt("product", call122),
+                                                                                        new ForkStmt(
+                                                                                                new CallFStmt("sum", call122)
+                                                                                        )
+                                                                                )
+                                                                        )
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+
+
         ArrayList<IStmt> hardcodedStatements = new ArrayList<>();
         hardcodedStatements.add(ex1);
         hardcodedStatements.add(ex2);
@@ -196,6 +260,7 @@ public class Interpreter {
         hardcodedStatements.add(ex14);
         hardcodedStatements.add(ex15);
         hardcodedStatements.add(ex16);
+        hardcodedStatements.add(ex17);
 
         return hardcodedStatements;
     }
@@ -210,7 +275,7 @@ public class Interpreter {
             } catch (Exception e) {
                 System.out.println("Stmt " + i +  ": " + e.getMessage());
             }
-            PrgState prg = new PrgState(new ExeStack(), new SymTable(), new Output(), new FileTable(), new Heap(), new LockTable(), hardcodedStatements.get(i));
+            PrgState prg = new PrgState(new ExeStack(), new MyStack<>(), new Output(), new FileTable(), new Heap(), new LockTable(), new ProcTable(), hardcodedStatements.get(i));
             IRepo repo = new Repository(prg, "log" + (i+1) + ".txt");
             Controller ctr = new Controller(repo);
             ctrs.add(ctr);

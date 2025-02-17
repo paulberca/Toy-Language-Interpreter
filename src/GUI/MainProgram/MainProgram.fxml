@@ -36,10 +36,24 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TableView fx:id="heapTable" prefHeight="647.0" prefWidth="208.0">
+                  <TableView fx:id="heapTable" prefHeight="518.0" prefWidth="194.0">
                      <columns>
                         <TableColumn prefWidth="103.99999696016312" text="Address" />
                         <TableColumn prefWidth="103.19999694824219" text="Value" />
+                     </columns>
+                  </TableView>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="LockTable" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="lockTableView" prefHeight="502.0" prefWidth="191.0">
+                     <columns>
+                        <TableColumn prefWidth="70.39998853206635" text="Lock" />
+                        <TableColumn minWidth="0.0" prefWidth="94.4000015258789" text="PrgID" />
                      </columns>
                   </TableView>
                </children>
@@ -121,7 +135,7 @@
                      </padding>
                   </Label>
                   <ListView fx:id="exeStackList" prefHeight="144.0" prefWidth="454.0" />
-                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="LockTable" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="189.0" text="ProcTable" textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -129,10 +143,10 @@
                         <Insets bottom="5.0" top="10.0" />
                      </padding>
                   </Label>
-                  <TableView fx:id="lockTableView" prefHeight="194.0" prefWidth="454.0">
+                  <TableView fx:id="procTableView" prefHeight="194.0" prefWidth="454.0">
                      <columns>
-                        <TableColumn prefWidth="160.0000137090683" text="Lock" />
-                        <TableColumn minWidth="0.0" prefWidth="223.99999237060547" text="PrgID" />
+                        <TableColumn prefWidth="160.0000137090683" text="Procedure" />
+                        <TableColumn minWidth="0.0" prefWidth="223.99999237060547" text="Body" />
                      </columns>
                   </TableView>
                </children>
